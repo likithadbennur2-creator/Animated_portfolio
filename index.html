@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jona Reyes — Group Design Manager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script type="module"
+    src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js">
+</script>
+</head>
+<body class="is-loading">
+
+<div id="intro-veil"><span class="mark">J · R</span></div>
+
+<!-- PARTICLE BACKGROUND -->
+<canvas id="particle-field"></canvas>
+
+<!-- HOLOGRAM ATMOSPHERE -->
+<div id="hologram-bg" aria-hidden="true">
+    <div class="hologram-light"></div>
+
+    <div class="hologram-wave hologram-wave-1"></div>
+    <div class="hologram-wave hologram-wave-2"></div>
+    <div class="hologram-wave hologram-wave-3"></div>
+
+    <div class="hologram-scanlines"></div>
+</div>
+
+<div id="grain"></div>
+
+<div id="cursor-glow"></div>
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+
+<div id="scroll-progress"></div>
+
+
+
+
+<nav id="side-nav" aria-hidden="true">
+  <button data-target="home" class="active" aria-label="Home"></button>
+  <button data-target="work" aria-label="Work"></button>
+  <button data-target="experience" aria-label="Experience"></button>
+  <button data-target="about" aria-label="About"></button>
+  <button data-target="contact" aria-label="Contact"></button>
+</nav>
+
+<header id="site-header">
+  <div class="logo">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#f5c518" stroke-width="1.4">
+      <circle cx="12" cy="7" r="4"></circle>
+      <path d="M6 21c0-4 2.5-6 6-6s6 2 6 6"></path>
+    </svg>
+    LIKITHA DB
+  </div>
+  <nav class="main-nav">
+    <a href="#home" class="active">/home</a>
+    <a href="#work">/work</a>
+    <a href="#experience">/experience</a>
+    <a href="#about">/about</a>
+    <a href="#contact">/contact</a>
+  </nav>
+  <a href="#contact" class="btn btn-primary">Let's talk →</a>
+</header>
+
+<!-- ================= HERO ================= -->
+<section id="home" class="hero">
+  <div class="hero-doodles">
+    <svg width="100%" height="100%" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+      <g stroke="#f5c518" stroke-width="1" fill="none" opacity="0.7">
+        <circle cx="1200" cy="230" r="34"></circle>
+        <line x1="1234" y1="230" x2="1300" y2="120" stroke-dasharray="4 4"></line>
+        <path d="M1420 300 L1470 380 L1500 300 Z"></path>
+        <line x1="1470" y1="380" x2="1470" y2="520"></line>
+        <circle cx="1310" cy="150" r="3" fill="#f5c518"></circle>
+        <circle cx="1080" cy="330" r="14"></circle>
+        <path d="M1080 316 L1080 260"></path>
+      </g>
+    </svg>
+  </div>
+
+  <div class="hero-portrait image-reveal" id="heroReveal">
+    <img src="portrait.png" alt="Jona Reyes portrait" class="reveal-source">
+    <div class="reveal-tiles"></div>
+</div>                                                                                                                               
+
+  <div class="hero-inner">
+    <div class="hero-badge fade-up" style="animation-delay:.1s">
+      <span class="dot"></span> AVAILABLE FOR WORK
+    </div>
+    <div class="hero-name-reveal" id="heroNameReveal">
+
+    <div class="hero-firstname">
+    LIKITHA
+</div>
+
+<h1 class="display hero-lastname">
+    D BENNUR
+</h1>
+
+    <!-- Image fragment effect -->
+    <canvas id="nameRevealCanvas"></canvas>
+
+</div>
+
+    <div class="hero-role-row fade-up" style="animation-delay:.4s">
+      <span class="rule"></span>
+      <p>CLOUD COMPUTATION . FULL STACK WEB DEVELOPMENT <span>DREAMER</span></p>
+    </div>
+
+    <p class="hero-desc fade-up" style="animation-delay:.48s">
+      Computer Science student aspiring to become a Cloud Engineer, passionate about cloud infrastructure, automation and modern technologies.<br>
+      I build practical projects, explore emerging technologies, and turn ideas into real-world solutions.
+    </p>
+
+    <div class="hero-actions fade-up" style="animation-delay:.56s">
+      <a href="#" class="btn btn-primary">VIEW ↓</a>
+      <a href="#work" class="btn btn-outline" id="viewWorkBtn">/VIEW WORK</a>
+    </div>
+  </div>
+</section>
+
+<div id="scroll-arrow-wrap">
+    <svg id="scroll-arrow-svg"
+         viewBox="0 0 1000 1000"
+         preserveAspectRatio="none">
+
+        <path
+            id="scroll-arrow-path"
+            d="M 500 300
+               C 650 360, 780 450, 700 570
+               C 620 680, 430 700, 500 820"
+        />
+
+        <path
+            id="scroll-arrow"
+            d="M 480 800 L 500 820 L 520 800"
+        />
+
+    </svg>
+</div>
+
+<!-- ================= MARQUEE 1 ================= -->
+<div class="marquee">
+  <div class="marquee-track" id="marquee1"></div>
+</div>
+
+<!-- ================= NUMBERS ================= -->
+<!-- ================= ABOUT ME — PAGE 2 ================= -->
+
+<section id="about-me" class="about-me-section">
+
+    <div class="about-me-inner">
+
+        <!-- LEFT -->
+        <div class="about-me-visual magic-reveal">
+
+            <div class="about-orbit orbit-one"></div>
+            <div class="about-orbit orbit-two"></div>
+
+            <div class="about-photo-wrap">
+
+    <!-- MAIN PORTRAIT -->
+    <img
+      src="portrait.png"
+      alt="Likitha DB"
+      class="about-me-photo"
+      id="aboutPhoto"
+    >
+
+    <!-- INTERACTIVE 3D OBJECTS -->
+    <div class="about-physics-field" id="aboutPhysicsField">
+
+        <a
+          class="physics-item physics-linkedin"
+          href="https://www.linkedin.com/in/likitha-d-bennur/"
+          target="_blank"
+          rel="noopener noreferrer"
+          data-name="LinkedIn"
+        >
+            <model-viewer
+              src="linkedin.glb"
+              auto-rotate
+              disable-zoom
+              interaction-prompt="none"
+            ></model-viewer>
+            <span>LINKEDIN</span>
+        </a>
+
+        <a
+        class="physics-item physics-github"
+        href="https://github.com/likithadbennur2-creator"
+        target="_blank"
+        rel="noopener noreferrer"
+        data-name="GitHub"
+        >
+    <model-viewer
+      src="github.glb"
+      auto-rotate
+      disable-zoom
+      interaction-prompt="none"
+    ></model-viewer>
+
+    <span>GITHUB</span>
+</a>
+
+        <a
+          class="physics-item physics-about"
+          href="#about"
+          data-name="About Me"
+        >
+            <model-viewer
+              src="question_mark.glb"
+              auto-rotate
+              disable-zoom
+              interaction-prompt="none"
+            ></model-viewer>
+            <span>ABOUT ME</span>
+        </a>
+
+        <a
+          class="physics-item physics-achievements"
+          href="#"
+          data-name="Achievements"
+        >
+            <model-viewer
+              src="achievement_trophy.glb"
+              auto-rotate
+              disable-zoom
+              interaction-prompt="none"
+            ></model-viewer>
+            
+        </a>
+
+        <a
+          class="physics-item physics-certifications"
+          href="#"
+          data-name="Certifications"
+        >
+            <model-viewer
+              src="question_mark.glb"
+              auto-rotate
+              disable-zoom
+              interaction-prompt="none"
+            ></model-viewer>
+            
+        </a>
+
+        <a
+          class="physics-item physics-arcade"
+          href="#"
+          target="_blank"
+          rel="noopener"
+          data-name="Google Arcade"
+        >
+            <model-viewer
+              src="question_mark.glb"
+              auto-rotate
+              disable-zoom
+              interaction-prompt="none"
+            ></model-viewer>
+            
+        </a>
+
+    </div>
+
+</div>
+            <div class="about-floating-dot"></div>
+
+        </div>
+
+
+        <!-- RIGHT -->
+        <div class="about-me-content">
+
+            <div class="eyebrow magic-reveal">
+                /ABOUT ME
+            </div>
+
+            <h2 class="display about-title magic-reveal hologram-title">
+    <span class="holo-word">I'M</span>
+    <span class="holo-word outline-text">LIKITHA</span>
+    <span class="holo-word outline-text">D BENNUR</span>
+</h2>
+
+            <div class="about-line magic-reveal"></div>
+
+            <p class="about-lead magic-reveal">
+                
+            </p>
+
+            <p class="magic-reveal">
+                I’m a Computer Science student aspiring to build a career in Cloud Engineering, with a passion for cloud infrastructure, automation, Java, and modern technologies.
+I enjoy building practical projects, exploring new technologies, and turning ideas into real-world solutions.
+
+            </p>
+
+            <p class="magic-reveal">
+                I enjoy working at the intersection of
+                <strong>exploring CLoud and automation </strong>.
+                I lead teams, build design systems, solve
+                challenging product problems and stay hands-on
+                with the craft.
+            </p>
+
+            <p class="magic-reveal">
+                Learning the cloud, building with code, and solving real problems.
+Computer Science student passionate about Cloud Engineering, Java, and automation.
+              </p>
+
+
+            <div class="about-me-tags magic-reveal">
+
+                <span>CLOUD COMPUTATION</span>
+                <span>SOFTWARE DEVELOPMENT</span>
+                <span>BACKEND DEVELOPMENT</span>
+                <span>ARTIFICIAL INTELLIGENCE</span>
+                <span>CREATIVE STRATEGY</span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================= PAGE 2 → PAGE 3 ARROW ================= -->
+<div id="about-work-arrow-wrap" aria-hidden="true">
+    <svg id="about-work-arrow-svg"
+         viewBox="0 0 1000 1000"
+         preserveAspectRatio="none">
+
+        <path
+            id="about-work-arrow-path"
+            d="M 500 180
+               C 700 250, 800 400, 680 520
+               C 560 640, 350 650, 500 820"
+        />
+
+        <path
+            id="about-work-arrow"
+            d="M 480 800 L 500 820 L 520 800"
+        />
+
+    </svg>
+</div>
+
+<!-- ================= WORK / PAGE 3 ================= -->
+<!-- ================= WORK / PAGE 3 ================= -->
+<section id="work" class="work-section">
+
+  <div class="section-head">
+    <div>
+      <div class="kicker">/ SELECTED WORK</div>
+      <h2 class="display">PROJECTS</h2>
+    </div>
+
+    <div class="section-meta">
+      <span>03 PROJECTS</span>
+    </div>
+  </div>
+
+  <div class="work-stack">
+
+    <!-- CARD 1 -->
+    <div class="stack-item">
+
+      <article class="work-card">
+
+        <div class="work-card-number">01 / 03</div>
+
+        <div class="work-card-content">
+
+          <div class="kicker">/ PROJECT ONE</div>
+
+          <h2 class="display">PROJECT ONE</h2>
+
+          <p>
+            Your first project description goes here.
+          </p>
+
+        </div>
+
+        <div class="work-card-label">
+          VIEW PROJECT →
+        </div>
+
+      </article>
+
+    </div>
+
+
+    <!-- CARD 2 -->
+    <div class="stack-item">
+
+      <article class="work-card">
+
+        <div class="work-card-number">02 / 03</div>
+
+        <div class="work-card-content">
+
+          <div class="kicker">/ PROJECT TWO</div>
+
+          <h2 class="display">PROJECT TWO</h2>
+
+          <p>
+            Your second project description goes here.
+          </p>
+
+        </div>
+
+        <div class="work-card-label">
+          VIEW PROJECT →
+        </div>
+
+      </article>
+
+    </div>
+
+
+    <!-- CARD 3 -->
+    <div class="stack-item">
+
+      <article class="work-card">
+
+        <div class="work-card-number">02 / 03</div>
+
+        <div class="work-card-content">
+
+          <div class="kicker">/ PROJECT TWO</div>
+
+          <h2 class="display">PROJECT TWO</h2>
+
+          <p>
+            Your second project description goes here.
+          </p>
+
+        </div>
+
+        <div class="work-card-label">
+          VIEW PROJECT →
+        </div>
+
+      </article>
+
+    </div>
+
+  </div>
+
+
+  <!-- CARD NAVIGATION -->
+  <div class="case-nav">
+
+    <div
+      class="case-dots"
+      id="case-dots">
+    </div>
+
+    <div
+      class="case-count"
+      id="case-count">
+      01 / 03
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ================= PAGE 4 ================= -->
+<section id="page-four" class="page-four">
+
+  <div class="page-four-inner">
+
+    <div class="page-four-number">04</div>
+
+    <div class="page-four-content">
+      <div class="page-four-eyebrow">/ NEXT CHAPTER</div>
+
+      <h2>
+        LET'S
+        <span>CREATE</span>
+      </h2>
+
+      <p>
+        A new space for my creative work, experiments,
+        ideas and digital experiences.
+      </p>
+    </div>
+
+    <div class="page-four-bottom">
+      <span>SCROLL TO EXPLORE</span>
+      <span>↓</span>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ================= MARQUEE 2 ================= -->
+<div class="marquee dark reverse">
+  <div class="marquee-track" id="marquee2"></div>
+</div>
+
+<!-- ================= EXPERIENCE ================= -->
+<section id="experience">
+  <div class="section-head">
+    <div>
+      <div class="eyebrow">/EXPERIENCE</div>
+      <h2 class="display">WORK <span class="outline-text">HISTORY</span></h2>
+    </div>
+    <p class="side-note">15+ years leading design across fintech, automotive and advertising.</p>
+  </div>
+
+  <div class="timeline" id="timeline"></div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section id="about" class="about-section">
+  <div class="about-grid">
+    <div class="about-portrait">
+      <svg viewBox="0 0 500 620" preserveAspectRatio="xMidYMax slice">
+        <rect width="500" height="620" fill="#161616"/>
+        <g fill="none" stroke="#3a3a3a" stroke-width="1.5">
+          <path d="M110 620 C110 420 170 300 250 292 C330 300 390 420 390 620 Z"/>
+          <circle cx="250" cy="210" r="105"/>
+        </g>
+        <circle cx="292" cy="190" r="2" fill="#f5c518"/>
+      </svg>
+    </div>
+    <div class="about-copy">
+      <div class="eyebrow">/ABOUT</div>
+      <h2 class="display" style="margin:14px 0 26px;font-size:clamp(30px,3.6vw,46px);">A DESIGNER WHO SPEAKS <span class="outline-text">BUSINESS</span></h2>
+      <p>I'm <strong>Likitha DB</strong>,A curious Computer Science student ready to learn, build, and make an impact through technology.
+Always willing to take on challenges, explore beyond my comfort zone, and turn ideas into something real.
+ <strong>leading a design organization</strong> and staying hands-on with the craft — reviewing flows, sketching systems, and mentoring the next group of design leads.</p>
+      <div class="about-skills">
+        <span>CLOUD COMPUTAION</span>
+        <span>ARTIFICIAL INTELLIGENCE </span>
+        <span>PRODUCT DESIGN</span>
+        <span>SOFTWARE DEVELOPMENT</span>
+        <span>TEAM BUILDING</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section id="contact" class="contact-section">
+  <div class="eyebrow">/CONTACT</div>
+  <div style="margin-top:24px;">
+    <div class="display reveal-line" data-color="white">LET'S CRAFT</div>
+    <div class="display reveal-line" data-color="yellow">THE NEXT</div>
+    <div class="display reveal-line" data-color="white">CHAPTER.</div>
+  </div>
+
+  <a href="mailto:hello@jonareyes.com" class="contact-email">hello@jonareyes.com</a>
+
+  <div class="contact-links">
+    <a href="https://www.linkedin.com/in/likitha-d-bennur/">LINKEDIN</a>
+    <a href="#">CONTACT PAGE</a>
+    <a href="#">DOWNLOAD CV</a>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="footer-watermark">REYES</div>
+  <div class="footer-bottom">
+    <div class="logo">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f5c518" stroke-width="1.4">
+        <circle cx="12" cy="7" r="4"></circle>
+        <path d="M6 21c0-4 2.5-6 6-6s6 2 6 6"></path>
+      </svg>
+      LIKITHA D BENNUR
+    
+    </div>
+    <div>Copyright © 2026 Jona Reyes. All Rights Reserved.</div>
+    <div class="footer-status"><span class="dot"></span> OPEN TO WORK</div>
+  </div>
+</footer>
+
+<div id="scroll-hint" aria-hidden="true"><div class="core"></div></div>
+
+<script src="script.js"></script>
+</body>
+</html>
