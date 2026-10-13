@@ -3875,7 +3875,7 @@ if (aiAssistant && aiChatOverlay && aiChatFrame) {
   aiAssistant.addEventListener('click', function () {
 
     if (!aiChatFrame.getAttribute('src')) {
-      aiChatFrame.src = 'http://localhost:3000/agent.html';
+      aiChatFrame.src = 'https://portfolio-ai-agent-gy2j.onrender.com/agent.html';
     }
 
     aiChatOverlay.classList.add('ai-chat-open');
