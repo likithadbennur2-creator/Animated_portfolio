@@ -1,0 +1,897 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Likitha DB — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   TOKENS
+   ========================================================= */
+:root{
+  --bg:#0b0a09;
+  --bg-2:#131110;
+  --beige:#eaba37c5;
+  --beige-dim:rgba(211,200,170,.55);
+  --ink:#0d0c0b;
+  --sans:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;
+  --serif:'Playfair Display','Times New Roman',Georgia,serif;
+  --ease:cubic-bezier(.76,0,.24,1);       /* in-out expo-ish */
+  --ease-out:cubic-bezier(.16,1,.3,1);    /* out expo */
+  --pad:clamp(14px,1.6vw,28px);
+
+  /* >>> Put your own portrait here: --hero-photo:url('me.jpg'); <<< */
+  --hero-photo:none;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{background:var(--bg);-webkit-text-size-adjust:100%}
+body{
+  font-family:var(--sans);background:var(--bg);color:var(--beige);
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+body.is-loading{overflow:hidden;height:100vh}
+a{color:inherit;text-decoration:none}
+@media (hover:hover) and (pointer:fine){ *{cursor:none!important} }
+
+/* =========================================================
+   CUSTOM CURSOR (tiny beige square)
+   ========================================================= */
+.cursor{
+  position:fixed;left:0;top:0;width:12px;height:12px;margin:-6px 0 0 -6px;
+  background:var(--beige);z-index:1000;pointer-events:none;opacity:0;
+  transition:opacity .3s, width .35s var(--ease-out), height .35s var(--ease-out), margin .35s var(--ease-out), background .3s;
+  mix-blend-mode:normal;will-change:transform;
+}
+.cursor.on{opacity:1}
+.cursor.hover{width:54px;height:54px;margin:-27px 0 0 -27px;background:rgba(211,200,170,.9);mix-blend-mode:difference}
+@media (hover:none),(pointer:coarse){.cursor{display:none}}
+
+/* =========================================================
+   LOADER
+   ========================================================= */
+.loader{position:fixed;inset:0;z-index:900;background:#050505;display:grid;place-items:center;overflow:hidden}
+.loader.done{display:none}
+.loader__intro{position:absolute;inset:0;background:radial-gradient(120% 90% at 20% 60%,#181510,#050505 70%)}
+.loader__intro .hl{font-family:var(--serif);font-weight:700;letter-spacing:0;text-transform:uppercase;color:var(--beige)}
+.loader__intro .hl .row{display:block}
+.loader__intro .nav{opacity:1;transform:translateX(-50%)}
+
+.tiles{position:relative;width:clamp(130px,15vw,250px);aspect-ratio:1;opacity:0}
+.tile{position:absolute;inset:0;border-radius:3px;overflow:hidden;display:none}
+.tile.on{display:block}
+.tile--beige{background:var(--beige)}
+/* little illustrative tiles, all pure CSS */
+.t1{background:
+  linear-gradient(#e9e2d4,#e9e2d4);}
+.t1::before{content:"";position:absolute;inset:12% 10%;
+  background:
+   linear-gradient(#e5c79a,#e5c79a) 0 0/28% 24% no-repeat,
+   linear-gradient(#f0dca8,#f0dca8) 36% 0/28% 24% no-repeat,
+   linear-gradient(#e5c79a,#e5c79a) 72% 0/28% 24% no-repeat,
+   linear-gradient(#f0dca8,#f0dca8) 0 34%/28% 24% no-repeat,
+   linear-gradient(#d9b88a,#d9b88a) 36% 34%/28% 24% no-repeat,
+   linear-gradient(#e5c79a,#e5c79a) 72% 34%/28% 24% no-repeat,
+   linear-gradient(#f0dca8,#f0dca8) 0 68%/28% 24% no-repeat,
+   linear-gradient(#e5c79a,#e5c79a) 36% 68%/28% 24% no-repeat;}
+.t1::after{content:"";position:absolute;right:-8%;bottom:-8%;width:46%;height:60%;background:#3b3f4a;border-radius:50% 50% 0 0}
+.t2{background:#f3f1ec}
+.t2::before{content:"";position:absolute;inset:16% 12%;
+  background:
+   linear-gradient(#bdb8ad,#bdb8ad) 0 0/100% 2px no-repeat,
+   linear-gradient(#cfcac0,#cfcac0) 0 20%/55% 38% no-repeat,
+   linear-gradient(#cfcac0,#cfcac0) 62% 20%/38% 18% no-repeat,
+   linear-gradient(#cfcac0,#cfcac0) 62% 44%/38% 14% no-repeat,
+   linear-gradient(#cfcac0,#cfcac0) 0 68%/100% 12% no-repeat;}
+.t2::after{content:"";position:absolute;left:30%;top:40%;width:3px;height:26%;background:#111;transform:rotate(28deg);box-shadow:0 0 0 1px #111}
+.t3{background:linear-gradient(135deg,#e9d9cf 0 30%,#2a2352 30% 100%)}
+.t3::before{content:"";position:absolute;inset:12% 10%;border-radius:10px;
+  background:linear-gradient(120deg,#8c6bff,#2c1f6b 55%,#0e0b2a);box-shadow:0 0 0 4px #14121f}
+.t3::after{content:"";position:absolute;left:52%;top:38%;width:30%;height:8%;border-radius:3px;background:#2ee6a6;box-shadow:0 -16px 0 -2px #5a49c9}
+.t4{background:linear-gradient(135deg,#b69cff,#3a2a8f 50%,#10122e)}
+.t4::before{content:"";position:absolute;left:0;right:0;bottom:0;height:46%;background:linear-gradient(0deg,#0d0f24,transparent)}
+.t4::after{content:"";position:absolute;left:18%;bottom:12%;width:12%;height:34%;background:#dfe3ff;border-radius:40% 40% 0 0;box-shadow:30px 6px 0 0 #aeb6e6,58px 2px 0 0 #8e97d8}
+
+/* =========================================================
+   HEADER + NAV
+   ========================================================= */
+.top{
+  position:fixed;left:0;right:0;top:0;z-index:50;display:flex;justify-content:space-between;align-items:flex-start;
+  padding:calc(var(--pad)*.9) var(--pad);font-size:clamp(10px,.85vw,13px);letter-spacing:.02em;pointer-events:none;
+  mix-blend-mode:normal;
+}
+.top > *{pointer-events:auto}
+.logo{font-weight:600;letter-spacing:.28em;line-height:1.05;text-transform:uppercase;font-size:clamp(10px,.9vw,14px)}
+.logo i{display:inline-block;width:.78em;height:.78em;background:var(--beige);margin:0 .12em 0 .02em;transform:translateY(.02em)}
+.mail{color:var(--beige-dim);transition:color .3s}
+.mail:hover{color:var(--beige)}
+.top .logo,.top .mail{opacity:0;transform:translateY(-10px);transition:opacity .9s var(--ease-out) .5s,transform .9s var(--ease-out) .5s,color .3s}
+body.ready .top .logo,body.ready .top .mail{opacity:1;transform:none}
+
+.nav{
+  position:fixed;left:50%;bottom:clamp(14px,2.2vw,30px);transform:translateX(-50%);z-index:60;
+  display:flex;align-items:center;gap:clamp(2px,.4vw,6px);padding:5px;border-radius:7px;
+  background:rgba(22,20,18,.72);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);
+  border:1px solid rgba(211,200,170,.07);
+  font-size:clamp(9px,.72vw,11px);font-weight:500;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap;
+}
+.nav a.l{padding:.9em clamp(8px,1.1vw,16px);color:var(--beige-dim);transition:color .25s}
+.nav a.l:hover{color:var(--beige)}
+.nav a.cta{
+  display:flex;align-items:center;gap:.7em;padding:.5em 1.1em .5em .5em;border-radius:4px;background:var(--beige);color:var(--ink);
+  position:relative;overflow:hidden;font-weight:600;
+}
+.nav a.cta::before{content:"";position:absolute;inset:0;background:#fff;transform:translateY(101%);transition:transform .45s var(--ease)}
+.nav a.cta:hover::before{transform:none}
+.nav a.cta>*{position:relative}
+.avatar{width:2.5em;height:2.5em;border-radius:3px;background:
+  radial-gradient(circle at 50% 34%,#d8b79a 0 26%,transparent 27%),
+  radial-gradient(ellipse at 50% 112%,#1d1a18 0 48%,transparent 49%),
+  linear-gradient(#8a8178,#3b3733)}
+.nav:not(.nav--clone){opacity:0;transform:translate(-50%,24px);transition:opacity .9s var(--ease-out) .9s,transform .9s var(--ease-out) .9s}
+body.ready .nav:not(.nav--clone){opacity:1;transform:translate(-50%,0)}
+
+/* =========================================================
+   HERO (pinned; next section slides over it)
+   ========================================================= */
+.hero{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;z-index:1;background:#0c0b0a}
+.hero__bg{position:absolute;inset:-4%;transform:scale(1.18);transition:transform 2.2s var(--ease-out) .1s}
+body.ready .hero__bg{transform:scale(1)}
+.hero__bg::before{ /* user photo, or sepia studio backdrop */
+  content:"";position:absolute;inset:0;
+  background:
+    var(--hero-photo) center 20%/cover no-repeat,
+    radial-gradient(60% 55% at 52% 30%,#5b5042 0%,#2c2620 45%,#0f0d0b 80%);
+  filter:grayscale(1) sepia(.35) brightness(.55) contrast(1.05);
+}
+/* abstract portrait silhouette (shown when no photo is set) */
+.hero__bg::after{
+  content:"";position:absolute;left:50%;top:0;width:min(46vw,640px);height:100%;transform:translateX(-50%);
+  background:
+    radial-gradient(ellipse 15% 11% at 50% 20%,#7e6f5d 0 98%,transparent 100%),
+    radial-gradient(ellipse 27% 25% at 50% 86%,#2d2823 0 98%,transparent 100%),
+    radial-gradient(ellipse 7% 8% at 50% 36%,#4a4138 0 98%,transparent 100%);
+  filter:blur(18px);opacity:calc(1 - var(--has-photo,0));
+}
+.hero.has-photo .hero__bg::after{display:none}
+.hero__shade{position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg,rgba(0,0,0,.55),transparent 22%,transparent 55%,rgba(0,0,0,.65));}
+.hero__dim{position:absolute;inset:0;background:#0b0a09;opacity:0;pointer-events:none}
+
+.hero__inner{position:absolute;inset:0;will-change:transform}
+.hl{
+  position:absolute;left:var(--pad);right:var(--pad);top:52%;transform:translateY(-44%);
+  font-weight:600;line-height:.9;letter-spacing:-.035em;text-transform:uppercase;
+  font-size:min(12.6vw,24vh);color:var(--beige);
+}
+.hl .row{display:flex;align-items:center;gap:.14em}
+.hl .r1{width:83%}
+.hl .r1 .amp{margin-left:auto}
+.hl .r2{margin-left:42%}
+.hl .r3{width:100%}
+.line{display:block;overflow:hidden;padding:.06em 0 .02em;margin:-.06em 0 -.02em}
+.li{display:block;transform:translateY(112%);transition:transform 1.25s var(--ease-out)}
+body.ready .li{transform:none}
+.r1 .li{transition-delay:.15s}.r1 .amp .li{transition-delay:.25s}
+.r2 .li{transition-delay:.3s}
+.r3 .li{transition-delay:.45s}
+
+.badge{
+  flex:none;width:.74em;height:.74em;border-radius:.05em;position:relative;
+  background:linear-gradient(150deg,rgba(255,255,255,.14),rgba(255,255,255,.02) 55%,rgba(0,0,0,.25));
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  border:1px solid rgba(211,200,170,.08);
+  font-size:inherit;opacity:0;transform:scale(.6);transition:opacity .9s var(--ease-out) 1s,transform 1.1s var(--ease-out) 1s;
+}
+body.ready .badge{opacity:1;transform:none}
+.badge>span{
+  position:absolute;left:.12em;top:.12em;width:70%;
+  font-size:clamp(6px,.62vw,10px);line-height:1.15;font-weight:600;letter-spacing:.02em;color:#efe6cc;text-transform:uppercase;
+}
+.hero__p{
+  position:absolute;left:calc(var(--pad)*2.2);top:36.5%;max-width:20em;
+  font-size:clamp(9px,.92vw,15px);line-height:1.45;font-weight:500;letter-spacing:0;text-transform:none;color:var(--beige-dim);
+  opacity:0;transform:translateY(14px);transition:opacity 1s var(--ease-out) .9s,transform 1s var(--ease-out) .9s;
+}
+body.ready .hero__p{opacity:1;transform:none}
+.arrow{margin-left:auto;width:.5em;height:.5em;flex:none;color:var(--beige);position:relative;right:-.06em;
+  opacity:0;transition:opacity .8s .9s}
+body.ready .arrow{opacity:1}
+.arrow svg{width:100%;height:100%;display:block;animation:bob 2.4s var(--ease) infinite}
+@keyframes bob{0%,100%{transform:translateY(-8%)}50%{transform:translateY(8%)}}
+
+
+/* animated image boxes (hero badges) */
+.badge{overflow:hidden}
+.slides{position:absolute;inset:0;border-radius:inherit;overflow:hidden;background:#15130f}
+.slide{position:absolute;inset:0;clip-path:inset(100% 0 0 0)}
+.slide .im{position:absolute;inset:0;background-size:cover;background-position:center;transform:scale(1.35)}
+.slide.in{clip-path:inset(0);transition:clip-path 1.05s var(--ease)}
+.slide.in .im{transform:scale(1);transition:transform 1.6s var(--ease-out)}
+.slide.out{clip-path:inset(0 0 100% 0);transition:clip-path 1.05s var(--ease)}
+.slide.out .im{transform:scale(1.12) translateY(-6%);transition:transform 1.05s var(--ease)}
+.badge::after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;
+  background:linear-gradient(180deg,rgba(0,0,0,.55),rgba(0,0,0,0) 45%)}
+.badge>span{z-index:2}
+.badge>.slides{left:0;top:0;width:100%;height:100%;z-index:0;font-size:0}
+
+/* =========================================================
+   WHAT I DO  (panel that slides over the hero)
+   ========================================================= */
+.about{position:relative;z-index:5;height:420vh;background:var(--bg-2)}
+.about__stick{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+.about__stick::before{ /* soft lip so the panel edge reads as a surface */
+  content:"";position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,transparent,rgba(211,200,170,.14),transparent)}
+.about__body{position:absolute;left:var(--pad);right:var(--pad);top:50%;transform:translateY(-50%)}
+.tag{font-size:clamp(8px,.62vw,10px);letter-spacing:.14em;text-transform:uppercase;font-weight:500;color:var(--beige-dim)}
+.statement{
+  margin:.9em 0 .55em;font-weight:500;letter-spacing:-.04em;line-height:1.02;
+  font-size:min(6.3vw,13vh);max-width:12.4em;color:var(--beige);
+}
+.statement .w{display:inline-block;opacity:.13;will-change:opacity;white-space:pre}
+.trust{font-size:clamp(9px,.78vw,13px);color:var(--beige-dim);letter-spacing:-.005em}
+
+/* floating project cards */
+.cards{position:absolute;inset:0;pointer-events:none}
+.card{
+  position:absolute;top:0;border-radius:3px;overflow:hidden;will-change:transform;
+  box-shadow:0 30px 70px -20px rgba(0,0,0,.65);
+  transform:translate3d(0,120vh,0);
+}
+
+.cards .card {
+  overflow: hidden;
+  position: relative;
+}
+
+.cards .card > img {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  display: block;
+
+  z-index: 0;
+
+  transition: transform 0.7s cubic-bezier(.16, 1, .3, 1);
+}
+
+/* Keep your UI/text above the image */
+
+.cards .card .ui {
+  position: relative;
+  z-index: 2;
+}
+
+/* Nice hover effect */
+
+.cards .card:hover > img {
+  transform: scale(1.06);
+}
+.cards .card .ui {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  align-items: flex-end;
+
+  padding: 25px;
+
+  z-index: 2;
+
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.75),
+    rgba(0,0,0,0.05) 65%
+  );
+}
+.card .ui{position:absolute;inset:0;overflow:hidden}
+.card h4{position:absolute;font-weight:600;letter-spacing:-.03em;line-height:1.05}
+/* 1 — purple dashboard */
+.c1{left:5vw;width:max(310px,50vw);aspect-ratio:1.90}
+.c1 .ui{background:radial-gradient(90% 90% at 20% 10%,#6b3fe0,#2a1a6e 55%,#120d33)}
+.c1 .ui::before{content:"";position:absolute;inset:9% 38% 9% 6%;border-radius:6px;
+  background:
+   linear-gradient(135deg,#c78bff,#fff64b) 0 0/46% 38% no-repeat,
+   linear-gradient(135deg,#6fd0ff,#ffff5b) 54% 0/46% 38% no-repeat,
+   linear-gradient(135deg,#8f6bff,#c2a42ef7) 0 48%/46% 38% no-repeat,
+   linear-gradient(135deg,#ff9ad0,#fffa5b) 54% 48%/46% 38% no-repeat;}
+.c1 .ui::after{content:"";position:absolute;right:6%;top:9%;bottom:9%;width:26%;border-radius:6px;background:
+   linear-gradient(rgba(255,255,255,.14),rgba(255,255,255,.14)) 0 0/100% 5px no-repeat,
+   repeating-linear-gradient(rgba(255,255,255,.1) 0 6px,transparent 6px 16px),rgba(20,14,50,.7)}
+  /* ================================
+   PROJECT 1 CLICK + IMAGE FIX
+================================ */
+
+.c1 {
+  pointer-events: auto !important;
+}
+
+.c1 .project-link {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.c1 .project-link img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  z-index: 10;
+  pointer-events: auto;
+}
+
+.c1 .ui {
+  pointer-events: none !important;
+}
+   /* 2 — green mobility */
+
+.c2{right: -30vw;width:max(310px,50vw);aspect-ratio:1.98}
+.c2 .ui{background:linear-gradient(180deg,#0b1a12,#0a2417 55%,#06100b)}
+.c2 .ui::before{content:"";position:absolute;right:-8%;top:0;bottom:0;width:20%;background:linear-gradient(100deg,transparent,#19d36a 40%,#0b6b36);transform:skewX(-8deg)}
+.c2 .ui::after{content:"";position:absolute;left:8%;right:22%;bottom:10%;height:26%;border-radius:4px;
+  background:linear-gradient(90deg,#1f3b2c,#2b6a46);box-shadow:0 -18px 0 -6px #112a1d}
+.c2 h4{left: 50px;top:20%;font-size:clamp(11px,1.5vw,24px);color:#eaf7ee}
+/* PROJECT 2 CLICK */
+
+.c2 {
+  pointer-events: auto !important;
+}
+
+.c2 .project-link {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.c2 .project-link img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  z-index: 10;
+  pointer-events: auto;
+}
+
+.c2 .ui {
+  pointer-events: none !important;
+}
+
+/* 3 — cream organics */
+
+
+.c3{left:8vw;transform: translateX(-100px);width:max(320px,55vw);aspect-ratio:1.9}
+.c3 .ui{background:radial-gradient(70% 60% at 20% 20%,#a8c8a6,transparent 60%),radial-gradient(60% 50% at 90% 40%,#efc7a3,transparent 60%),#f0ebdd}
+.c3 .ui::before{content:"";position:absolute;left:12%;right:12%;bottom:12%;height:34%;
+  background:
+   radial-gradient(ellipse 50% 50% at 50% 50%,#3e3a2c 0 98%,transparent 100%) 0 0/28% 100% no-repeat,
+   radial-gradient(ellipse 50% 50% at 50% 50%,#9a8250 0 98%,transparent 100%) 36% 0/28% 100% no-repeat,
+   radial-gradient(ellipse 50% 50% at 50% 50%,#6d5d3c 0 98%,transparent 100%) 72% 0/28% 100% no-repeat}
+.c3 h4{left:10%;top:36%;font-family:var(--serif);font-weight:700;font-size:clamp(12px,1.55vw,25px);color:#3a3426;letter-spacing:-.01em}
+/* 4 — teal landscape */
+.c4{left:10vw;width:max(200px,24vw);aspect-ratio:1.04}
+.c4 .ui{background:linear-gradient(180deg,#123b3a,#0f2f35 40%,#0d2128)}
+.c4 .ui::before{content:"";position:absolute;left:8%;right:8%;top:16%;height:34%;border-radius:2px;
+  background:linear-gradient(180deg,#bfa77a 0,#6e8f7c 40%,#1f4f5a 41%,#13363f)}
+.c4 .ui::after{content:"";position:absolute;left:8%;right:8%;bottom:10%;height:26%;
+  background:
+   linear-gradient(#274b50,#274b50) 0 0/30% 100% no-repeat,
+   repeating-linear-gradient(rgba(255,255,255,.14) 0 3px,transparent 3px 9px) 42% 8%/55% 70% no-repeat}
+.c4 h4{left:12%;top:5.5%;font-size:clamp(9px,1vw,15px);color:#e8efe9;font-weight:500}
+/* 5 — navy data */
+.c5{right:9vw;width:max(190px,22vw);aspect-ratio:1.08}
+.c5 .ui{background:radial-gradient(80% 70% at 30% 35%,#22206a,#0f0f35 60%,#080820)}
+.c5 .ui::before{content:"";position:absolute;left:14%;top:30%;width:34%;height:34%;
+  background:linear-gradient(135deg,#79e3ff,#4b6cff);clip-path:polygon(50% 0,100% 28%,100% 74%,50% 100%,0 74%,0 28%);opacity:.9}
+.c5 .ui::after{content:"";position:absolute;right:5%;top:8%;bottom:8%;width:34%;border-radius:4px;background:
+   repeating-linear-gradient(rgba(255,255,255,.1) 0 4px,transparent 4px 18px),rgba(70,80,190,.18)}
+.c5 h4{left:8%;top:11%;font-size:clamp(9px,1.05vw,16px);color:#eef0ff;font-weight:500;max-width:7em}
+
+/* =========================================
+   CUSTOM PROJECT IMAGES
+   REMOVE OLD CARD ARTWORK
+   ========================================= */
+
+.cards .card > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  z-index: 1;
+}
+
+/* Hide the old generated card artwork */
+.cards .card .ui {
+  background: transparent !important;
+}
+
+/* Remove old CSS artwork */
+.cards .card .ui::before,
+.cards .card .ui::after {
+  display: none !important;
+}
+
+/* Keep text above the image */
+.cards .card .ui {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+/* Optional dark gradient behind text */
+.cards .card .ui:has(h4) {
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,.75),
+    rgba(0,0,0,0) 65%
+  ) !important;
+}
+
+/* Image hover */
+.cards .card > img {
+  transition: transform .7s cubic-bezier(.16,1,.3,1);
+}
+
+.cards .card:hover > img {
+  transform: scale(1.05);
+}
+
+
+/* =========================================================
+   CASE STUDIES
+   ========================================================= */
+.work{position:relative;z-index:6;background:var(--bg);padding:clamp(90px,14vw,240px) var(--pad) clamp(60px,8vw,140px);min-height:100vh}
+.work__head{position:relative}
+.work__tag{display:flex;align-items:center;gap:.9em;margin-bottom:clamp(14px,2.2vw,40px)}
+.work__tag .bar{width:clamp(18px,2.4vw,40px);height:2px;background:var(--beige);transform-origin:left;transform:scaleX(0);transition:transform 1s var(--ease) .1s}
+.work.in .work__tag .bar{transform:none}
+.big{
+  font-weight:600;letter-spacing:-.045em;line-height:.9;text-transform:uppercase;
+  font-size:min(14.5vw,30vh);color:var(--beige);white-space:nowrap;
+}
+.big .ch{display:inline-block;overflow:hidden;padding:.05em 0 .02em;margin:-.05em 0 -.02em;vertical-align:top}
+.big .ch>span{display:inline-block;transform:translateY(112%);transition:transform 1.15s var(--ease-out)}
+.work.in .big .ch>span{transform:none}
+
+.list{margin-top:clamp(40px,6vw,110px);border-top:1px solid rgba(211,200,170,.14)}
+.item{
+  position:relative;display:grid;grid-template-columns:4em 1fr auto auto;gap:1.5em;align-items:baseline;
+  padding:clamp(18px,2.1vw,34px) 0;border-bottom:1px solid rgba(211,200,170,.14);overflow:hidden;
+  font-size:clamp(11px,.85vw,14px);color:var(--beige-dim);
+  opacity:0;transform:translateY(28px);transition:opacity .9s var(--ease-out),transform .9s var(--ease-out),color .4s;
+}
+.item.in{opacity:1;transform:none}
+.item::before{content:"";position:absolute;inset:0;background:var(--beige);transform:translateY(101%);transition:transform .55s var(--ease);z-index:0}
+.item:hover::before{transform:none}
+.item:hover{color:rgba(13,12,11,.65)}
+.item>*{position:relative;z-index:1}
+.item b{font-weight:600;font-size:clamp(22px,3.6vw,64px);letter-spacing:-.04em;line-height:1;color:var(--beige);transition:color .4s,transform .55s var(--ease-out)}
+.item:hover b{color:var(--ink);transform:translateX(1.2vw)}
+.foot{margin-top:clamp(70px,10vw,180px);display:flex;justify-content:space-between;align-items:flex-end;gap:2em;flex-wrap:wrap;font-size:clamp(10px,.85vw,13px);color:var(--beige-dim)}
+.foot a{color:var(--beige)}
+
+/* =========================================================
+   RESPONSIVE / MOTION PREFS
+   ========================================================= */
+@media (max-width:720px){
+  .hl .r2{margin-left:34%}
+  .hero__p{left:var(--pad);top:37%;max-width:13em}
+  .item{grid-template-columns:2.4em 1fr auto}
+  .item span:nth-child(3){display:none}
+  .c1{left:-2vw}.c2{right:4vw}.c3{left:30vw}.c4{left:4vw}.c5{right:2vw}
+  .nav a.l:nth-child(3){display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .li,.badge,.hero__p,.arrow,.top .logo,.top .mail,.nav:not(.nav--clone){transition-duration:.01s!important;transition-delay:0s!important}
+  .arrow svg{animation:none}
+}
+</style>
+</head>
+<body class="is-loading">
+
+<div class="cursor" id="cursor"></div>
+
+<!-- ================= LOADER ================= -->
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader__intro" id="intro">
+    <h2 class="hl" style="top:50%;transform:translateY(-50%)">
+      <span class="row r1"><span>likitha</span><span style="margin-left:.9em">&amp;</span></span>
+      
+      <span class="row r3"><span></span></span>
+    </h2>
+  </div>
+  <div class="tiles" id="tiles">
+    <div class="tile t1"></div>
+    <div class="tile t2"></div>
+    <div class="tile t3"></div>
+    <div class="tile t4"></div>
+    <div class="tile tile--beige" id="beige"></div>
+  </div>
+</div>
+
+<!-- ================= FIXED UI ================= -->
+<header class="top">
+  <a href="#" class="logo" aria-label="Likitha ">Likitha<br>D<i></i>Bennur</a>
+  <a href="mailto:hello@yourname.com" class="mail" data-hover>hello@likitha.com</a>
+</header>
+
+<nav class="nav" id="nav">
+  <a class="l" href="index.html#work" data-hover>Home page</a>
+  <a class="l" href="#about" data-hover>About</a>
+  <a class="l" href="#archive" data-hover>Archive</a>
+  <a class="cta" href="mailto:likithadbennur2@gmail.com" data-hover><span class="avatar"></span><span>Let's talk</span></a>
+</nav>
+
+<main>
+  <!-- ================= HERO ================= -->
+  <section class="hero" id="hero">
+    <div class="hero__bg" id="heroBg"></div>
+    <div class="hero__shade"></div>
+
+    <div class="hero__inner" id="heroInner">
+      <h1 class="hl">
+        <span class="row r1">
+          <span class="line"><span class="li">Likitha</span></span>
+          <span class="badge"><span class="slides" data-set="a"></span></span>
+
+        </span>
+        
+        <span class="row r3">
+          <span class="line"><span class="li">D Bennur</span></span>
+          
+          <span class="arrow" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"><path d="M12 3v18M5 14l7 7 7-7"/></svg>
+          </span>
+        </span>
+        <p class="hero__p">Hey, I'm Likitha . I design websites and passionate about cloud computing field.</p>
+      </h1>
+    </div>
+    <div class="hero__dim" id="heroDim"></div>
+  </section>
+
+  <!-- ================= WHAT I DO ================= -->
+  <section class="about" id="about">
+    <div class="about__stick">
+      <div class="about__body">
+        <div class="tag">[ What I do ]</div>
+        <p class="statement" id="statement"> aspiring cloud computation developer with a lot of focus in Full stack devlopment</p>
+        
+      </div>
+
+      <div class="cards" id="cards">
+
+  <div class="card c1">
+  <a href="page3.html" class="project-link">
+    <img src="cloudforge.png" alt="Project 1">
+  </a>
+  <div class="ui"></div>
+</div>
+
+  <div class="card c2">
+  <a href="project2.html" class="project-link">
+    <img src="project2.png" alt="Project 2">
+  </a>
+
+  <div class="ui">
+    <h4>Move freely<br>Live better</h4>
+  </div>
+</div>
+
+  <div class="card c2">
+  <a href="echo.html" class="project-link">
+    <img src="echo.png" alt="Project 3">
+  </a>
+
+  <div class="ui">
+    <h4>Move freely<br>Live better</h4>
+  </div>
+</div>
+
+  
+
+
+</div>
+    </div>
+  </section>
+
+  <!-- ================= CASE STUDIES ================= -->
+  <section class="work" id="work">
+    <div class="work__head">
+      <div class="work__tag tag"><span class="bar"></span>[ Case studies ]</div>
+      <h2 class="big" id="big" aria-label="Featured.">Featured.</h2>
+    </div>
+
+    <div class="list">
+      <a class="item" href="project2.html" data-hover><span>01</span><b>SentinelCloud – Cloud Auto Vulnerability Detection & Automation</b><span>In Testing phase</span><span>2026</span></a>
+      <a class="item" href="page3.html" data-hover><span>02</span><b>ECHO – Your AI Companion, Anytime </b><span>Will be Out soon !!</span><span>2026</span></a>
+      <a class="item" href="project2.html" data-hover><span>03</span><b>VoiceStudio – Conversational AI for Real-Time Web Interface Generation</b><span>Best Hackathon project</span><span>2025</span></a>
+    
+    </div>
+
+    <footer class="foot" id="archive">
+     
+      <a href="mailto:hello@likithadbennur.com" data-hover>hello@likithadbennur2.com ↗</a>
+    </footer>
+  </section>
+</main>
+
+<script>
+(() => {
+  'use strict';
+  const $  = (s, c=document) => c.querySelector(s);
+  const $$ = (s, c=document) => [...c.querySelectorAll(s)];
+  const lerp = (a,b,t) => a+(b-a)*t;
+  const clamp = (v,a=0,b=1) => Math.min(b,Math.max(a,v));
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fine = matchMedia('(hover:hover) and (pointer:fine)').matches;
+    /* ---------- play intro only once ---------- */
+  let seen = false;
+  try { seen = sessionStorage.getItem('introPlayed') === '1'; } catch(e) {}
+  if (seen) document.getElementById('loader').classList.add('done'); // hide loader instantly
+
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+}
+
+if (!window.location.hash) {
+    window.scrollTo(0, 0);
+}
+
+  /* ---------- detect a user-supplied hero photo ---------- */
+  const heroEl = $('#hero');
+  const photo = getComputedStyle(document.documentElement).getPropertyValue('--hero-photo').trim();
+  if (photo && photo !== 'none') heroEl.classList.add('has-photo');
+
+
+  /* =====================================================
+     YOUR IMAGES — drop file paths in these arrays.
+     Leave an array empty to use the built-in CSS artwork.
+     ===================================================== */
+  const IMAGES = {
+  loader: [ 'portrait.png','project1.png','cloudforge.png','echo.png' ],  // flickering square in the intro animation
+  badgeA: [ 'portrait.png','project1.png','cloudforge.png','echo.png' ],              // the box beside "Likitha" on the first page
+  badgeB: [],
+};
+  const ART = ['t1','t2','t3','t4'];   // fallback artwork classes
+
+  // preloader tiles -> your images
+  $$('.tile:not(.tile--beige)').forEach((t,i) => {
+    const src = IMAGES.loader[i]; if (!src) return;
+    t.className = 'tile'; t.style.cssText = `background:url("${src}") center/cover`;
+  });
+
+  // animated slideshow: each new image wipes up over the last, with a zoom-settle
+  function slideshow(el, urls, order, every, delay){
+    const items = urls.length ? urls.map(u => ({url:u})) : order.map(c => ({art:c}));
+    let i = -1, prev = null;
+    const mk = it => {
+      const sl = document.createElement('span'); sl.className = 'slide';
+      const im = document.createElement('span'); im.className = 'im';
+      if (it.url) im.style.backgroundImage = `url("${it.url}")`; else im.classList.add(it.art);
+      sl.appendChild(im); el.appendChild(sl); return sl;
+    };
+    const next = () => {
+      i = (i + 1) % items.length;
+      const sl = mk(items[i]);
+      sl.getBoundingClientRect();                       // commit start state
+      requestAnimationFrame(() => {
+        sl.classList.add('in');
+        if (prev){ const old = prev; old.classList.remove('in'); old.classList.add('out'); setTimeout(() => old.remove(), 1200); }
+        prev = sl;
+      });
+    };
+    setTimeout(() => { next(); setInterval(next, every); }, delay);
+  }
+  function startBadges(){
+    slideshow($('.slides[data-set=a]'), IMAGES.badgeA, ['t3','t1','t4','t2'], 2400, 1700);
+    slideshow($('.slides[data-set=b]'), IMAGES.badgeB, ['t2','t4','t1','t3'], 2400, 2900);
+  }
+
+  /* ---------- clone nav into the loader's intro frame ---------- */
+  const nav = $('#nav');
+  const navClone = nav.cloneNode(true);
+  navClone.removeAttribute('id'); navClone.classList.add('nav--clone');
+  $('#intro').appendChild(navClone);
+
+  /* ---------- custom cursor (lerped) ---------- */
+  const cursor = $('#cursor');
+  let mx = innerWidth/2, my = innerHeight/2, cx = mx, cy = my;
+  addEventListener('pointermove', e => { mx = e.clientX; my = e.clientY; });
+  document.addEventListener('pointerover', e => {
+    cursor.classList.toggle('hover', !!e.target.closest('a,[data-hover],button'));
+  });
+
+  /* ---------- split text ---------- */
+  // statement -> words
+  const st = $('#statement');
+  const words = st.textContent.trim().split(/\s+/);
+  st.textContent = '';
+  const wEls = words.map((w,i) => {
+    const s = document.createElement('span'); s.className = 'w'; s.textContent = w + (i < words.length-1 ? ' ' : '');
+    st.appendChild(s); return s;
+  });
+  // FEATURED. -> masked chars
+  const big = $('#big');
+  const bigText = big.textContent;
+  big.textContent = '';
+  [...bigText].forEach((c,i) => {
+    const m = document.createElement('span'); m.className = 'ch'; m.setAttribute('aria-hidden','true');
+    const s = document.createElement('span'); s.textContent = c; s.style.transitionDelay = (i*55)+'ms';
+    m.appendChild(s); big.appendChild(m);
+  });
+
+  /* =====================================================
+     LOADER TIMELINE
+     serif flash -> image tiles cycle -> beige square ->
+     bg dissolves to reveal hero -> square shrinks into cursor
+     ===================================================== */
+  async function runLoader(){
+    const loader = $('#loader'), intro = $('#intro'), tilesWrap = $('#tiles');
+    const tiles = $$('.tile', tilesWrap);
+
+        if (reduce || seen){ finish(); return; }
+    try { sessionStorage.setItem('introPlayed', '1'); } catch(e) {}
+
+    await sleep(1150);                                          // serif frame holds
+    await intro.animate([{opacity:1},{opacity:0}],{duration:350,easing:'ease-out',fill:'forwards'}).finished;
+
+    tilesWrap.style.opacity = 1;
+    for (const t of tiles){                                     // tile flicker
+      tiles.forEach(x => x.classList.remove('on'));
+      t.classList.add('on');
+      await sleep(t.id === 'beige' ? 650 : 430);
+    }
+
+    // reveal the hero behind (loader bg dissolves, square stays)
+    loader.animate([{background:'#050505'},{background:'rgba(5,5,5,0)'}],{duration:750,easing:'ease-in-out',fill:'forwards'});
+    await sleep(500);
+
+    // square -> cursor: shrink and glide to the pointer
+    const beige = $('#beige');
+    const r = beige.getBoundingClientRect();
+    const dx = (fine ? cx : innerWidth/2) - (r.left + r.width/2);
+    const dy = (fine ? cy : innerHeight/2) - (r.top + r.height/2);
+    const s = 12 / r.width;
+    document.body.classList.add('ready');                       // hero text starts rising now
+    await beige.animate([
+      {transform:'translate(0,0) scale(1)',opacity:1},
+      {transform:`translate(${dx}px,${dy}px) scale(${s})`,opacity:1}
+    ],{duration:900,easing:'cubic-bezier(.76,0,.24,1)',fill:'forwards'}).finished;
+    cursor.style.transform = `translate(${cx}px,${cy}px)`;
+    cursor.classList.add('on');
+    loader.classList.add('done');
+    finish(true);
+  }
+  function finish(ready){
+    document.body.classList.remove('is-loading');
+    document.body.classList.add('ready');
+    $('#loader').classList.add('done');
+    cursor.classList.add('on');
+    start(); startBadges();
+  }
+
+  /* =====================================================
+     SCROLL ENGINE — lerped scroll value drives all parallax
+     ===================================================== */
+  const about = $('#about'), cardsWrap = $('#cards'), cards = $$('.card', cardsWrap);
+  const heroInner = $('#heroInner'), heroBg = $('#heroBg'), heroDim = $('#heroDim');
+  const work = $('#work');
+  let vh = innerHeight, vw = innerWidth;
+  let aboutTop = 0, aboutH = 0, cardH = [];
+  // each card: when it enters (progress), how long it takes to cross
+  const plan = [
+    {s:.10, d:.50},   // purple dashboard
+    {s:.17, d:.46},   // green
+    {s:.30, d:.50},   // cream
+    {s:.42, d:.46},   // teal
+    {s:.52, d:.46},   // navy
+  ];
+  function measure(){
+    vh = innerHeight; vw = innerWidth;
+    aboutTop = about.offsetTop; aboutH = about.offsetHeight;
+    cardH = cards.map(c => c.offsetHeight);
+  }
+  addEventListener('resize', measure);
+
+  let sy = 0, started = false;
+  function frame(){
+    const target = scrollY;
+    sy = Math.abs(target - sy) < .05 ? target : lerp(sy, target, .085);
+
+    // cursor
+    cx = lerp(cx, mx, .22); cy = lerp(cy, my, .22);
+    cursor.style.transform = `translate(${cx}px,${cy}px)`;
+
+    // hero: slight parallax + dim as the panel covers it
+    const hp = clamp(sy / vh);
+    heroInner.style.transform = `translate3d(0,${-hp*vh*.18}px,0) scale(${1 - hp*.04})`;
+    heroDim.style.opacity = (hp*.85).toFixed(3);
+
+    // about progress (0 -> 1)
+    const start = aboutTop - vh*.6, end = aboutTop + aboutH - vh;
+    const p = clamp((sy - start) / (end - start));
+
+    // word-by-word light up
+    const a = .05, b = .46;
+    const rp = clamp((p - a)/(b - a));
+    const n = wEls.length, soft = 5;
+    wEls.forEach((el,i) => {
+      const t = clamp((rp*(n+soft) - i)/soft);
+      el.style.opacity = (.13 + .87*t).toFixed(3);
+    });
+
+    // floating cards
+    cards.forEach((c,i) => {
+      const {s,d} = plan[i];
+      const t = clamp((p - s)/d);
+      const from = vh + 30, to = -cardH[i] - 60;
+      const y = lerp(from, to, t);
+      const drift = (t - .5) * (i%2 ? 24 : -24);                // tiny horizontal drift
+      c.style.transform = `translate3d(${drift}px,${y}px,0)`;
+    });
+
+    // reveal "work" when it enters
+    if (!work.classList.contains('in') && work.getBoundingClientRect().top < vh*.62){
+      work.classList.add('in');
+      $$('.item').forEach((it,i) => setTimeout(() => it.classList.add('in'), 650 + i*110));
+    }
+    requestAnimationFrame(frame);
+  }
+  function start(){
+    if (started) return; started = true;
+    measure(); sy = scrollY; requestAnimationFrame(frame);
+  }
+  // keep cards in place before loader ends (they sit below the fold)
+  measure();
+
+  /* ---------- smooth anchor links ---------- */
+  $$('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
+    const id = a.getAttribute('href'); if (id === '#') { e.preventDefault(); scrollTo({top:0,behavior:'smooth'}); return; }
+    const el = $(id); if (!el) return; e.preventDefault();
+    let top = el.getBoundingClientRect().top + scrollY;
+    if (id === '#about') top = aboutTop + vh*.9;               // land with the statement readable
+    scrollTo({top, behavior:'smooth'});
+  }));
+
+  /* ---------- subtle mouse parallax on the portrait ---------- */
+  if (fine && !reduce){
+    addEventListener('pointermove', e => {
+      const x = (e.clientX/innerWidth - .5), y = (e.clientY/innerHeight - .5);
+      heroBg.style.translate = `${-x*18}px ${-y*12}px`;
+    });
+    heroBg.style.transition += ', translate 1.2s cubic-bezier(.16,1,.3,1)';
+  }
+
+  // go (wait for fonts so the serif -> sans swap is clean)
+  const go = () => runLoader();
+  (document.fonts && document.fonts.ready ? Promise.race([document.fonts.ready, sleep(1500)]) : Promise.resolve()).then(go);
+})();
+
+
+</script>
+</body>
+</html>                                                                                                                                                                                                  

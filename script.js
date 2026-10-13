@@ -65,7 +65,7 @@
 
   /* ---------- Marquees ---------- */
   var skills = ["ART DIRECTION","UX RESEARCH","INTERACTION DESIGN","CREATIVE LEADERSHIP","ROI-DRIVEN DESIGN","DESIGN SYSTEMS"];
-  var clients = ["UNIBANK","HAVAS","SÃO PAULO","ADCORE","AUTOCO","PAYWAVE"];
+  var clients = ["FULL STACK DEVELOPMENT","CLOUD COMPUTING","DESIGNING","VIDEO EDITOR","SOFTWARE DEVELOPMENT","GOOGLE ARCADE RANGER "];
   function buildMarquee(el, items){
     var html = '';
     for(var r=0;r<2;r++){
@@ -239,7 +239,7 @@ if (workSection && workStack && workItems.length && workCards.length) {
       if (!card) return;
 
       var depth = 0;
-      for (var k = index + 1; k <= workItems.length; k++) depth += coverage[k];
+      for (var k = index + 1; k < workItems.length; k++) depth += coverage[k];
       depth = Math.min(depth, MAX_DEPTH);
 
       var translateY = -depth * STEP;
@@ -276,15 +276,7 @@ if (workSection && workStack && workItems.length && workCards.length) {
 
   /* ---------- Experience timeline ---------- */
   var experience = [
-    {idx:'01', company:'UNIBANK', role:'GROUP DESIGN MANAGER', period:'2022 — PRESENT',
-      desc:'Led design across the automotive marketplace, vehicle financing, credit card and asset-backed lending products. Contributed to back-to-back historical production records. Built structured design teams across 4 product groups, leading ~20 designers.',
-      tags:['DESIGN LEADERSHIP','PRODUCT STRATEGY','TEAM BUILDING']},
-    {idx:'02', company:'HAVAS', role:'SENIOR ART DIRECTOR', period:'2019 — 2022',
-      desc:'Directed campaigns and brand systems for regional and global accounts, translating business goals into creative platforms that shipped across digital, print and out-of-home.',
-      tags:['ART DIRECTION','BRAND STRATEGY','CAMPAIGNS']},
-    {idx:'03', company:'ADCORE', role:'ART DIRECTOR', period:'2015 — 2019',
-      desc:'Owned visual identity and digital product design for advertising clients spanning retail, automotive and finance, mentoring a small team of junior designers along the way.',
-      tags:['VISUAL IDENTITY','DIGITAL PRODUCT','MENTORSHIP']}
+    
   ];
   var timeline = document.getElementById('timeline');
   timeline.innerHTML = experience.map(function(e){
@@ -501,10 +493,178 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }, 850);
 
+    /* =====================================================
+   PAGE 4 — ENVELOPE SCROLL ANIMATION
+===================================================== */
+
+const pageFour = document.querySelector("#page-four");
+
+if (pageFour) {
+
+    const envelope = pageFour.querySelector(".envelope");
+    const envelopeFlap = pageFour.querySelector(".envelope-flap");
+    const envelopePaper = pageFour.querySelector(".envelope-paper");
+
+    function updatePageFourEnvelope() {
+
+        const rect = pageFour.getBoundingClientRect();
+        const vh = window.innerHeight;
+
+        /*
+         * Start when Page 4 enters the viewport.
+         * Finish after the envelope has opened.
+         */
+        let progress =
+            (vh - rect.top) /
+            (vh + rect.height);
+
+        progress = Math.max(0, Math.min(1, progress));
+
+
+        /* ---------------------------------------------
+           ENVELOPE TILT
+        --------------------------------------------- */
+
+        const rotateX =
+            -8 * progress;
+
+        const rotateZ =
+            -10 * progress;
+
+        const scale =
+            0.82 +
+            (0.18 * progress);
+
+
+        envelope.style.transform =
+            `
+            perspective(1200px)
+            rotateX(${rotateX}deg)
+            rotateZ(${rotateZ}deg)
+            scale(${scale})
+            `;
+
+
+        /* ---------------------------------------------
+           FLAP OPENS
+        --------------------------------------------- */
+
+        let flapProgress =
+            (progress - 0.22) /
+            0.30;
+
+        flapProgress =
+            Math.max(
+                0,
+                Math.min(1, flapProgress)
+            );
+
+        envelopeFlap.style.transform =
+            `
+            rotateX(
+                ${180 * flapProgress}deg
+            )
+            `;
+
+
+        /* ---------------------------------------------
+           PAPER COMES OUT
+        --------------------------------------------- */
+
+        let paperProgress =
+            (progress - 0.45) /
+            0.55;
+
+        paperProgress =
+            Math.max(
+                0,
+                Math.min(1, paperProgress)
+            );
+
+
+        /*
+         * Ease the paper movement.
+         */
+        const paperEase =
+            paperProgress *
+            paperProgress *
+            (3 - 2 * paperProgress);
+
+
+        const paperY =
+            8 -
+            (55 * paperEase);
+
+        const paperScale =
+            0.92 +
+            (0.12 * paperEase);
+
+        const paperRotate =
+            -4 +
+            (4 * paperEase);
+
+
+        envelopePaper.style.transform =
+            `
+            translateY(${paperY}%)
+            rotateZ(${paperRotate}deg)
+            scale(${paperScale})
+            `;
+
+
+        /* ---------------------------------------------
+           PAPER SHADOW
+        --------------------------------------------- */
+
+        envelopePaper.style.boxShadow =
+            `
+            0
+            ${15 + 20 * paperEase}px
+            ${35 + 35 * paperEase}px
+            rgba(0,0,0,${0.18 + 0.10 * paperEase})
+            `;
+
+    }
+
+
+    let pageFourTicking = false;
+
+    function requestPageFourUpdate() {
+
+        if (pageFourTicking) return;
+
+        pageFourTicking = true;
+
+        requestAnimationFrame(() => {
+
+            updatePageFourEnvelope();
+
+            pageFourTicking = false;
+
+        });
+
+    }
+
+
+    window.addEventListener(
+        "scroll",
+        requestPageFourUpdate,
+        { passive: true }
+    );
+
+    window.addEventListener(
+        "resize",
+        requestPageFourUpdate
+    );
+
+    updatePageFourEnvelope();
+
+}
+
 });
 
 /* =========================================================
-   JONA REYES — FRAGMENT IMAGE HOVER
+   likitha — FRAGMENT IMAGE HOVER
    ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -522,7 +682,7 @@ document.addEventListener("DOMContentLoaded", () => {
      * Change this if your image has another filename.
      */
     const image = new Image();
-    image.src = "portrait.png";
+    image.src = "purple.png";
 
     /*
      * Number of fragments
@@ -1602,7 +1762,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         /*
          * Don't split elements that contain HTML
-         * such as your JONA REYES span.
+         * such as your LIKITHA span.
          */
 
         if (element.children.length > 0) {
@@ -1805,6 +1965,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
+    
+
     /* =====================================================
        ARROW CANVAS
     ===================================================== */
@@ -1999,7 +2161,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const start =
             arrowData.startY -
-            window.innerHeight * 0.45;
+            window.innerHeight * 0.66;
 
 
         /* -----------------------------------------------
@@ -2008,7 +2170,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const end =
             arrowData.targetY -
-            window.innerHeight * 0.60;
+            window.innerHeight * 0.70;
 
 
         /* -----------------------------------------------
@@ -2262,523 +2424,6 @@ document.addEventListener("DOMContentLoaded", () => {
    MAGIC SCROLL CONNECTING ARROW
    ========================================================= */
 
-document.addEventListener("DOMContentLoaded", () => {
-
-    const arrowWrap =
-        document.getElementById("about-work-arrow-wrap");
-
-    const svg =
-        document.getElementById("about-work-arrow-svg");
-
-    const path =
-        document.getElementById("about-work-arrow-path");
-
-    const arrow =
-        document.getElementById("about-work-arrow");
-
-    const aboutPhoto =
-        document.querySelector(".about-photo-wrap");
-
-    const workSection =
-        document.getElementById("work");
-
-
-    if (
-        !arrowWrap ||
-        !svg ||
-        !path ||
-        !arrow ||
-        !aboutPhoto ||
-        !workSection
-    ) {
-        console.warn("Page 2 → Page 3 arrow elements missing.");
-        return;
-    }
-
-
-    /* =====================================================
-       MAKE ARROW CANVAS COVER THE PAGE
-       ===================================================== */
-
-    function resizeAboutWorkArrowCanvas() {
-
-        const pageWidth =
-            document.documentElement.scrollWidth;
-
-        const pageHeight =
-            document.documentElement.scrollHeight;
-
-
-        arrowWrap.style.position = "absolute";
-        arrowWrap.style.top = "0";
-        arrowWrap.style.left = "0";
-
-        arrowWrap.style.width =
-            pageWidth + "px";
-
-        arrowWrap.style.height =
-            pageHeight + "px";
-
-
-        svg.setAttribute(
-            "viewBox",
-            `0 0 ${pageWidth} ${pageHeight}`
-        );
-
-        svg.setAttribute(
-            "width",
-            pageWidth
-        );
-
-        svg.setAttribute(
-            "height",
-            pageHeight
-        );
-    }
-
-
-    /* =====================================================
-       CREATE PAGE 2 → PAGE 3 CURVE
-       ===================================================== */
-
-    const arrowData = {
-        length: 0,
-        startY: 0,
-        targetY: 0
-    };
-
-
-    function createAboutWorkArrowPath() {
-
-        resizeAboutWorkArrowCanvas();
-
-
-        const startRect =
-            aboutPhoto.getBoundingClientRect();
-
-        const targetRect =
-            workSection.getBoundingClientRect();
-
-
-        /* -----------------------------------------------
-           START
-           Bottom-center area of Page 2 photo
-        ------------------------------------------------ */
-
-        const startX =
-            startRect.left +
-            startRect.width / 2;
-
-        const startY =
-            startRect.bottom +
-            window.scrollY;
-
-
-        /* -----------------------------------------------
-           TARGET
-           Top-center of Page 3
-        ------------------------------------------------ */
-
-        const targetX =
-            targetRect.left +
-            targetRect.width / 2;
-
-        const targetY =
-            targetRect.top +
-            window.scrollY +
-            80;
-
-
-        const distance =
-            targetY - startY;
-
-
-        /* -----------------------------------------------
-           CURVE
-        ------------------------------------------------ */
-
-        const curve =
-            Math.min(
-                280,
-                Math.max(
-                    140,
-                    window.innerWidth * 0.18
-                )
-            );
-
-
-        /* -----------------------------------------------
-           S-CURVE
-        ------------------------------------------------ */
-
-        const d = `
-            M ${startX} ${startY}
-
-            C
-                ${startX - curve}
-                ${startY + distance * 0.18},
-
-                ${targetX - curve}
-                ${startY + distance * 0.35},
-
-                ${targetX}
-                ${startY + distance * 0.50}
-
-            C
-                ${targetX + curve}
-                ${startY + distance * 0.65},
-
-                ${targetX + curve * 0.35}
-                ${startY + distance * 0.85},
-
-                ${targetX}
-                ${targetY}
-        `;
-
-
-        path.setAttribute(
-            "d",
-            d
-        );
-
-        arrow.setAttribute(
-    "d",
-    "M -20 -20 L 0 0 L 20 -20"
-);
-
-
-        /* -----------------------------------------------
-           PATH LENGTH
-        ------------------------------------------------ */
-
-        const length =
-            path.getTotalLength();
-
-
-        path.style.strokeDasharray =
-            "5 10";
-
-        path.style.strokeDashoffset =
-            length;
-
-
-        arrowData.length =
-            length;
-
-        arrowData.startY =
-            startY;
-
-        arrowData.targetY =
-            targetY;
-    }
-
-
-    /* =====================================================
-       SCROLL ANIMATION
-       ===================================================== */
-
-    function updateAboutWorkArrow() {
-
-    if (!arrowData.length) return;
-
-
-    const scrollY =
-        window.scrollY;
-
-
-    /* -----------------------------------------------
-       WHEN THE DRAWING STARTS
-    ------------------------------------------------ */
-
-    const start =
-        arrowData.startY -
-        window.innerHeight * 0.45;
-
-
-    /* -----------------------------------------------
-       WHEN THE DRAWING FINISHES
-    ------------------------------------------------ */
-
-    const end =
-        arrowData.targetY -
-        window.innerHeight * 0.60;
-
-
-    /* -----------------------------------------------
-       SCROLL → PROGRESS
-    ------------------------------------------------ */
-
-    let progress =
-        (scrollY - start) /
-        (end - start);
-
-
-    progress =
-        Math.max(
-            0,
-            Math.min(
-                1,
-                progress
-            )
-        );
-
-
-    /* -----------------------------------------------
-       CURRENT DRAWING LENGTH
-    ------------------------------------------------ */
-
-    const drawnLength =
-        arrowData.length *
-        progress;
-
-
-    /* -----------------------------------------------
-       DOTTED VISIBLE PATH
-    ------------------------------------------------ */
-
-    path.style.strokeDasharray =
-        "5 10";
-
-
-    /* -----------------------------------------------
-       REVEAL MASK
-    ------------------------------------------------ */
-
-    let mask =
-        document.getElementById(
-            "about-work-arrow-mask"
-        );
-
-
-    if (!mask) {
-
-        const defs =
-            document.createElementNS(
-                "http://www.w3.org/2000/svg",
-                "defs"
-            );
-
-
-        mask =
-            document.createElementNS(
-                "http://www.w3.org/2000/svg",
-                "mask"
-            );
-
-        mask.setAttribute(
-            "id",
-            "about-work-arrow-mask"
-        );
-
-
-        const revealPath =
-            document.createElementNS(
-                "http://www.w3.org/2000/svg",
-                "path"
-            );
-
-
-        revealPath.setAttribute(
-            "id",
-            "about-work-arrow-reveal-path"
-        );
-
-
-        revealPath.setAttribute(
-            "fill",
-            "none"
-        );
-
-        revealPath.setAttribute(
-            "stroke",
-            "white"
-        );
-
-        revealPath.setAttribute(
-            "stroke-linecap",
-            "round"
-        );
-
-        revealPath.setAttribute(
-            "stroke-width",
-            "12"
-        );
-
-
-        mask.appendChild(
-            revealPath
-        );
-
-        defs.appendChild(
-            mask
-        );
-
-        svg.insertBefore(
-            defs,
-            svg.firstChild
-        );
-    }
-
-
-    const revealPath =
-        document.getElementById(
-            "about-work-arrow-reveal-path"
-        );
-
-
-    /* -----------------------------------------------
-       KEEP MASK ON SAME PATH
-    ------------------------------------------------ */
-
-    revealPath.setAttribute(
-        "d",
-        path.getAttribute("d")
-    );
-
-
-    /* -----------------------------------------------
-       MASK REVEALS ONLY THE SCROLLED PORTION
-    ------------------------------------------------ */
-
-    revealPath.style.strokeDasharray =
-        `${arrowData.length} ${arrowData.length}`;
-
-    revealPath.style.strokeDashoffset =
-        arrowData.length -
-        drawnLength;
-
-
-    path.setAttribute(
-        "mask",
-        "url(#about-work-arrow-mask)"
-    );
-
-
-    /* -----------------------------------------------
-       ARROW HEAD FOLLOWS THE END OF THE DOTS
-    ------------------------------------------------ */
-
-    if (progress > 0) {
-
-        const point =
-            path.getPointAtLength(
-                drawnLength
-            );
-
-
-        const nextPoint =
-            path.getPointAtLength(
-                Math.min(
-                    drawnLength + 2,
-                    arrowData.length
-                )
-            );
-
-
-        /* -------------------------------------------
-           DIRECTION
-        -------------------------------------------- */
-
-        const angle =
-            Math.atan2(
-                nextPoint.y - point.y,
-                nextPoint.x - point.x
-            ) *
-            180 /
-            Math.PI;
-
-
-        /* -------------------------------------------
-           POSITION ARROW HEAD
-        -------------------------------------------- */
-
-        arrow.setAttribute(
-            "transform",
-            `
-                translate(
-                    ${point.x}
-                    ${point.y}
-                )
-                rotate(${angle})
-            `
-        );
-
-
-        path.style.opacity =
-            "0.9";
-
-        arrow.style.opacity =
-            "1";
-
-    } else {
-
-        path.style.opacity =
-            "0";
-
-        arrow.style.opacity =
-            "0";
-    }
-}
-
-
-    /* =====================================================
-       SCROLL
-       ===================================================== */
-
-    let ticking = false;
-
-
-    window.addEventListener(
-        "scroll",
-        () => {
-
-            if (ticking) return;
-
-            ticking = true;
-
-
-            requestAnimationFrame(() => {
-
-                updateAboutWorkArrow();
-
-                ticking = false;
-
-            });
-
-        },
-        { passive: true }
-    );
-
-
-    /* =====================================================
-       RESIZE
-       ===================================================== */
-
-    window.addEventListener(
-        "resize",
-        () => {
-
-            createAboutWorkArrowPath();
-
-            updateAboutWorkArrow();
-
-        }
-    );
-
-
-    /* =====================================================
-       INITIAL
-       ===================================================== */
-
-    requestAnimationFrame(() => {
-
-        createAboutWorkArrowPath();
-
-        updateAboutWorkArrow();
-
-    });
-
-});
 
 /* =========================================
    PAGE 2 — SMOOTH 3D BUBBLE PHYSICS
@@ -3424,5 +3069,877 @@ bubble.targetY =
 });
 /* =========================================
    CLICKABLE LINKEDIN ICON
+
 ========================================= */
 
+/* ---------- Project 1 → Page 3 ---------- */
+
+
+/* =========================================================
+   PAGE 4 — SCROLL ENVELOPE TRANSITION
+   Adapted from Pasted text(8).txt
+   ========================================================= */
+
+(function () {
+  "use strict";
+
+  /* ---------- Page 4 elements ---------- */
+
+  var pageFour = document.getElementById("page-four");
+
+  /* If Page 4 is not present, stop here */
+  if (!pageFour) return;
+
+  var track = pageFour.querySelector(".page-four-track");
+  var stage = pageFour.querySelector(".page-four-stage");
+  var env = pageFour.querySelector(".page-four-envelope");
+
+  var flapF = document.getElementById("page-four-flap-front");
+  var flapB = document.getElementById("page-four-flap-back");
+
+  var cm = document.getElementById("page-four-card-move");
+  var card = document.getElementById("page-four-card");
+
+  var hero = pageFour.querySelector(".page-four-hero");
+  var strip = pageFour.querySelector(".page-four-strip");
+  var hint = pageFour.querySelector(".page-four-hint");
+  var bitsHost = pageFour.querySelector(".page-four-bits");
+
+  /* ---------- Safety check ---------- */
+
+  if (
+    !track ||
+    !stage ||
+    !env ||
+    !flapF ||
+    !flapB ||
+    !cm ||
+    !card
+  ) {
+    return;
+  }
+
+
+  /* =========================================================
+     HELPERS
+     ========================================================= */
+
+  var reduce =
+    window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+
+  var clamp = function (v, a, b) {
+    return Math.min(b, Math.max(a, v));
+  };
+
+
+  var seg = function (p, a, b) {
+    return clamp(
+      (p - a) / (b - a),
+      0,
+      1
+    );
+  };
+
+
+  var ease = function (x) {
+    return x < 0.5
+      ? 4 * x * x * x
+      : 1 -
+        Math.pow(
+          -2 * x + 2,
+          3
+        ) / 2;
+  };
+
+
+  var lerp = function (a, b, x) {
+    return a + (b - a) * x;
+  };
+
+
+  /* =========================================================
+     MEASURE
+     ========================================================= */
+
+  var H;
+  var W;
+  var cH;
+  var vw;
+  var vh;
+  var max;
+
+
+  function measure() {
+
+    vw = window.innerWidth;
+    vh = window.innerHeight;
+
+    W = env.offsetWidth;
+    H = env.offsetHeight;
+
+    cH = card.offsetHeight;
+
+    max = Math.max(
+      1,
+      track.offsetHeight - vh
+    );
+  }
+
+
+  window.addEventListener(
+    "resize",
+    measure
+  );
+
+
+  /* =========================================================
+     SCROLL READING
+     ========================================================= */
+
+  var target = 0;
+  var cur = -1;
+
+
+  function read() {
+
+    /*
+      Page 4 progress:
+
+      0 = Page 4 just starts
+      1 = Page 4 transition finished
+    */
+
+    target = clamp(
+      -track.getBoundingClientRect().top / max,
+      0,
+      1
+    );
+  }
+
+
+  window.addEventListener(
+    "scroll",
+    read,
+    {
+      passive: true
+    }
+  );
+
+
+  /* =========================================================
+     RENDER PAGE 4
+     ========================================================= */
+
+  function render(p) {
+
+    /*
+      Same four animation phases
+      from the reference:
+
+      rise → envelope comes up
+      flap → envelope opens
+      out  → paper comes out
+      fin  → final movement
+    */
+
+    var rise = ease(
+      seg(p, 0, 0.3)
+    );
+
+    var flap = seg(
+      p,
+      0.24,
+      0.46
+    );
+
+    var out = ease(
+      seg(p, 0.42, 0.8)
+    );
+
+    var fin = ease(
+      seg(p, 0.76, 1)
+    );
+
+
+    /* =====================================================
+       ENVELOPE MOVEMENT
+       ===================================================== */
+
+    var y =
+      lerp(
+        0.62 * vh,
+        0.06 * vh,
+        rise
+      ) +
+      fin * 0.15 * vh;
+
+
+    var rot =
+      lerp(
+        0,
+        -8,
+        rise
+      ) +
+      fin * 5;
+
+
+    var sc =
+      lerp(
+        0.9,
+        1,
+        rise
+      );
+
+
+    env.style.transform =
+      "translate(-50%, -50%) " +
+      "translate3d(0, " +
+      y +
+      "px, 0) " +
+      "rotate(" +
+      rot +
+      "deg) " +
+      "scale(" +
+      sc +
+      ")";
+
+
+    /* =====================================================
+       FRONT + BACK FLAP
+       ===================================================== */
+
+    var a = ease(
+      clamp(
+        flap * 2,
+        0,
+        1
+      )
+    );
+
+
+    var b = ease(
+      clamp(
+        flap * 2 - 1,
+        0,
+        1
+      )
+    );
+
+
+    /* Front flap opens */
+
+    flapF.style.transform =
+      "perspective(900px) " +
+      "rotateX(" +
+      (-90 * a) +
+      "deg)";
+
+
+    flapF.style.visibility =
+      a >= 1
+        ? "hidden"
+        : "visible";
+
+
+    /* Back flap */
+
+    flapB.style.transform =
+      "perspective(900px) " +
+      "rotateX(" +
+      (90 * (1 - b)) +
+      "deg)";
+
+
+    flapB.style.visibility =
+      b <= 0
+        ? "hidden"
+        : "visible";
+
+
+    /* =====================================================
+       PAPER / CARD COMES OUT
+       ===================================================== */
+
+    var cy =
+      lerp(
+        cH - 0.9 * H,
+        0.38 * cH - H,
+        out
+      );
+
+
+    var cs =
+      1 +
+      0.16 * fin;
+
+
+    cm.style.transform =
+      "translate3d(0, " +
+      cy +
+      "px, 0) " +
+      "scale(" +
+      cs +
+      ")";
+
+
+    /* =====================================================
+       FINAL STAGE
+       ===================================================== */
+
+    stage.classList.toggle(
+      "live",
+      p > 0.9
+    );
+
+
+    /* =====================================================
+       HERO TEXT LEAVES
+       ===================================================== */
+
+    if (hero) {
+
+      var opacity =
+        1 -
+        seg(
+          p,
+          0,
+          0.16
+        );
+
+
+      hero.style.opacity =
+        opacity;
+
+
+      hero.style.transform =
+        "translate3d(0, " +
+        (-p * vh * 0.9) +
+        "px, 0)";
+    }
+
+
+    /* =====================================================
+       MARQUEE LEAVES
+       ===================================================== */
+
+    if (strip) {
+
+      strip.style.opacity =
+        1 -
+        seg(
+          p,
+          0.02,
+          0.2
+        );
+
+
+      strip.style.transform =
+        "rotate(-2deg) " +
+        "translate3d(0, " +
+        (-p * vh * 1.4) +
+        "px, 0)";
+    }
+
+
+    /* =====================================================
+       SCROLL HINT
+       ===================================================== */
+
+    if (hint) {
+
+      hint.style.opacity =
+        1 -
+        seg(
+          p,
+          0,
+          0.08
+        );
+    }
+
+
+    /* =====================================================
+       SMALL FLOATING SCRAPS
+       ===================================================== */
+
+    pageFourBits.forEach(
+      function (s) {
+
+        var by =
+          (s.y / 100) *
+            vh -
+          p *
+            vh *
+            s.sp *
+            1.1;
+
+
+        s.el.style.transform =
+          "translate3d(" +
+          (s.x / 100) *
+            vw +
+          "px, " +
+          by +
+          "px, 0) " +
+          "rotate(" +
+          (s.r +
+            p * s.rs) +
+          "deg)";
+      }
+    );
+  }
+
+
+  /* =====================================================
+   FLOATING SCRAPS — DISABLED
+   ===================================================== */
+
+var pageFourBits = [];
+  /* =========================================================
+     ANIMATION LOOP
+     ========================================================= */
+
+  function frame() {
+
+    cur =
+      cur < 0
+        ? target
+        : cur +
+          (target - cur) *
+            (reduce
+              ? 1
+              : 0.085);
+
+
+    if (
+      Math.abs(
+        target - cur
+      ) < 0.0002
+    ) {
+
+      cur = target;
+    }
+
+
+    render(cur);
+
+
+    requestAnimationFrame(
+      frame
+    );
+  }
+
+
+  /* =========================================================
+     START
+     ========================================================= */
+
+  measure();
+
+  read();
+
+  cur = target;
+
+  frame();
+
+
+  window.addEventListener(
+    "load",
+    function () {
+
+      measure();
+
+      read();
+    }
+  );
+
+})();
+
+// =========================================================
+// FLOATING MENU — OPEN / CLOSE
+// =========================================================
+
+(function () {
+  "use strict";
+
+  const menuToggle = document.getElementById("menuToggle");
+  const menuPanel = document.getElementById("menuPanel");
+  const menuClose = document.getElementById("menuClose");
+
+  if (!menuToggle || !menuPanel || !menuClose) return;
+
+  function openMenu() {
+    menuPanel.classList.add("active");
+    menuToggle.setAttribute("aria-expanded", "true");
+  }
+
+  function closeMenu() {
+    menuPanel.classList.remove("active");
+    menuToggle.setAttribute("aria-expanded", "false");
+  }
+
+  menuToggle.addEventListener("click", function () {
+    if (menuPanel.classList.contains("active")) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
+  });
+
+  menuClose.addEventListener("click", closeMenu);
+
+  // Close menu when a navigation link is clicked
+  menuPanel.querySelectorAll("a").forEach(function (link) {
+    link.addEventListener("click", function () {
+      closeMenu();
+    });
+  });
+
+  // Close with Escape key
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") {
+      closeMenu();
+    }
+  });
+
+    // Hover reveal on desktop
+  if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+
+    menuToggle.addEventListener("mouseenter", openMenu);
+
+    menuPanel.addEventListener("mouseleave", function (event) {
+      if (!menuPanel.contains(event.relatedTarget)) {
+        closeMenu();
+      }
+    });
+
+  }
+})();
+
+// =========================================================
+// MENU BALL — FLOAT AROUND ENTIRE SCREEN
+// =========================================================
+
+(function () {
+
+  const ball = document.getElementById("menuToggle");
+
+  if (!ball) return;
+
+  let x = window.innerWidth - 120;
+  let y = 80;
+
+  let vx = 1.8;
+  let vy = 1.4;
+
+  let rotation = 0;
+
+  function animateMenuBall() {
+
+    const ballWidth = ball.offsetWidth;
+    const ballHeight = ball.offsetHeight;
+
+    x += vx;
+    y += vy;
+
+    // Bounce from left / right
+    if (x <= 10) {
+      x = 10;
+      vx = Math.abs(vx);
+    }
+
+    if (x >= window.innerWidth - ballWidth - 10) {
+      x = window.innerWidth - ballWidth - 10;
+      vx = -Math.abs(vx);
+    }
+
+    // Bounce from top / bottom
+    if (y <= 10) {
+      y = 10;
+      vy = Math.abs(vy);
+    }
+
+    if (y >= window.innerHeight - ballHeight - 10) {
+      y = window.innerHeight - ballHeight - 10;
+      vy = -Math.abs(vy);
+    }
+
+    // Continuous spinning
+    rotation += 3;
+
+    ball.style.left = x + "px";
+    ball.style.top = y + "px";
+
+    ball.style.transform =
+      "rotate(" + rotation + "deg)";
+
+    requestAnimationFrame(animateMenuBall);
+  }
+
+  animateMenuBall();
+
+})();
+  
+
+// =========================================================
+// ABOUT ME — PARAGRAPH TEXT REVEAL
+// =========================================================
+
+(function () {
+  "use strict";
+
+  const aboutContent = document.querySelector(
+    "#about-me .about-me-content"
+  );
+
+  if (!aboutContent) return;
+
+  const observer = new IntersectionObserver(
+    function (entries) {
+
+      entries.forEach(function (entry) {
+
+        if (entry.isIntersecting) {
+
+          aboutContent.classList.add("about-text-visible");
+
+          observer.unobserve(aboutContent);
+        }
+
+      });
+
+    },
+    {
+      threshold: 0.2
+    }
+  );
+
+  observer.observe(aboutContent);
+
+})();
+
+/* =========================================================
+   AI AGENT — IDLE + MOUSE REACTION
+========================================================= */
+
+(function () {
+
+  const aiAgent = document.querySelector('.hero-ai-agent');
+  const aiReact = document.querySelector('.hero-ai-react');
+
+  if (!aiAgent || !aiReact) return;
+
+  let targetX = 0;
+  let targetY = 0;
+  let targetRotateX = 0;
+  let targetRotateY = 0;
+
+  let currentX = 0;
+  let currentY = 0;
+  let currentRotateX = 0;
+  let currentRotateY = 0;
+
+  document.addEventListener('mousemove', function (e) {
+
+    const rect = aiAgent.getBoundingClientRect();
+
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+
+    const dx = e.clientX - centerX;
+    const dy = e.clientY - centerY;
+
+    const distance = Math.sqrt(
+      dx * dx + dy * dy
+    );
+
+    /* Only react when mouse is reasonably close */
+    if (distance < 600) {
+
+      /* Small position movement */
+      targetX = Math.max(
+        -12,
+        Math.min(12, dx / 45)
+      );
+
+      targetY = Math.max(
+        -10,
+        Math.min(10, dy / 55)
+      );
+
+      /*
+        Very small lean.
+
+        rotateY = left/right lean
+        rotateX = up/down lean
+
+        These values are deliberately tiny
+        so the character NEVER spins.
+      */
+
+      targetRotateY = Math.max(
+        -5,
+        Math.min(5, dx / 120)
+      );
+
+      targetRotateX = Math.max(
+        -4,
+        Math.min(4, -dy / 150)
+      );
+
+    } else {
+
+      targetX = 0;
+      targetY = 0;
+      targetRotateX = 0;
+      targetRotateY = 0;
+
+    }
+
+  });
+
+  function animateAIAgent() {
+
+    /* Smooth movement */
+
+    currentX +=
+      (targetX - currentX) * 0.06;
+
+    currentY +=
+      (targetY - currentY) * 0.06;
+
+    currentRotateX +=
+      (targetRotateX - currentRotateX) * 0.06;
+
+    currentRotateY +=
+      (targetRotateY - currentRotateY) * 0.06;
+
+
+    /* Apply movement */
+
+    aiReact.style.setProperty(
+      '--ai-x',
+      currentX + 'px'
+    );
+
+    aiReact.style.setProperty(
+      '--ai-y',
+      currentY + 'px'
+    );
+
+
+    /* Apply subtle lean */
+
+    aiReact.style.setProperty(
+      '--ai-rotate-x',
+      currentRotateX + 'deg'
+    );
+
+    aiReact.style.setProperty(
+      '--ai-rotate-y',
+      currentRotateY + 'deg'
+    );
+
+
+    requestAnimationFrame(
+      animateAIAgent
+    );
+  }
+
+  animateAIAgent();
+
+})();
+
+/* =========================================================
+   AI ASSISTANT — OPEN AI AGENT
+========================================================= */
+
+
+/* =========================================================
+   AI ASSISTANT — CLICK TO OPEN CARD
+========================================================= */
+
+/* =========================================================
+   AI ASSISTANT — OPEN AGENT
+========================================================= */
+
+const aiAssistant = document.getElementById('aiAssistant');
+const aiChatOverlay = document.getElementById('aiChatOverlay');
+const aiChatClose = document.getElementById('aiChatClose');
+const aiChatFrame = document.getElementById('aiChatFrame');
+
+if (aiAssistant && aiChatOverlay && aiChatFrame) {
+
+  aiAssistant.addEventListener('click', function () {
+
+    if (!aiChatFrame.getAttribute('src')) {
+      aiChatFrame.src = 'http://localhost:3000/agent.html';
+    }
+
+    aiChatOverlay.classList.add('ai-chat-open');
+
+  });
+
+}
+
+if (aiChatClose && aiChatOverlay) {
+
+  aiChatClose.addEventListener('click', function (event) {
+
+    event.stopPropagation();
+
+    aiChatOverlay.classList.remove('ai-chat-open');
+
+  });
+
+}
+
+if (aiChatOverlay) {
+
+  aiChatOverlay.addEventListener('click', function (event) {
+
+    if (event.target === aiChatOverlay) {
+      aiChatOverlay.classList.remove('ai-chat-open');
+    }
+
+  });
+
+}
+
+(function () {
+
+    const resumeCard =
+        document.getElementById("page-four-card");
+
+    if (!resumeCard) return;
+
+    resumeCard.addEventListener("click", function () {
+
+        window.open(
+            "likitha db.pdf",
+            "_blank"
+        );
+
+    });
+
+})();
+
+
+
+const themeToggle = document.getElementById("themeToggle");
+
+themeToggle.addEventListener("click", function () {
+
+  document.body.classList.toggle("light-theme");
+
+  if (document.body.classList.contains("light-theme")) {
+    themeToggle.querySelector(".theme-icon").textContent = "☀";
+    themeToggle.querySelector(".theme-text").textContent = "LIGHT";
+  } else {
+    themeToggle.querySelector(".theme-icon").textContent = "☾";
+    themeToggle.querySelector(".theme-text").textContent = "DARK";
+  }
+
+});

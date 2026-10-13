@@ -3,16 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jona Reyes — Group Design Manager</title>
+<title>likitha-d-bennur</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bodoni+Moda:opsz,wght@6..96,400&family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <script type="module"
     src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js">
 </script>
 </head>
 <body class="is-loading">
+  <div class="theme-toggle" id="themeToggle">
+  <span class="theme-icon">☾</span>
+  <span class="theme-text">DARK</span>
+</div>
+
+
+  
 
 <div id="intro-veil"><span class="mark">J · R</span></div>
 
@@ -38,9 +45,6 @@
 
 <div id="scroll-progress"></div>
 
-
-
-
 <nav id="side-nav" aria-hidden="true">
   <button data-target="home" class="active" aria-label="Home"></button>
   <button data-target="work" aria-label="Work"></button>
@@ -49,7 +53,8 @@
   <button data-target="contact" aria-label="Contact"></button>
 </nav>
 
-<header id="site-header">
+<!-- ================= SITE HEADER ================= -->
+<header id="site-header" aria-hidden="true">
   <div class="logo">
     <svg viewBox="0 0 24 24" fill="none" stroke="#f5c518" stroke-width="1.4">
       <circle cx="12" cy="7" r="4"></circle>
@@ -57,15 +62,156 @@
     </svg>
     LIKITHA DB
   </div>
-  <nav class="main-nav">
-    <a href="#home" class="active">/home</a>
-    <a href="#work">/work</a>
-    <a href="#experience">/experience</a>
-    <a href="#about">/about</a>
-    <a href="#contact">/contact</a>
-  </nav>
+
+ 
+
   <a href="#contact" class="btn btn-primary">Let's talk →</a>
 </header>
+
+
+<!-- ================= FLOATING MENU ================= -->
+
+<button
+  class="menu-toggle"
+  id="menuToggle"
+  type="button"
+  aria-label="Open menu"
+  aria-expanded="false"
+>
+  <span></span>
+  <span></span>
+</button>
+
+
+<div class="menu-panel" id="menuPanel">
+
+  <!-- MENU HEADER -->
+  <div class="menu-top">
+
+    <div>
+      <p>MENU</p>
+      <h3>NAVIGATION</h3>
+    </div>
+
+    <button
+      class="menu-close"
+      id="menuClose"
+      type="button"
+      aria-label="Close menu"
+    >
+      CLOSE
+    </button>
+
+  </div>
+
+
+  <!-- SOCIAL LINKS -->
+  <div class="menu-socials">
+
+  <a
+    href="https://www.linkedin.com/in/likitha-d-bennur"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <span>LINKEDIN</span>
+    <span class="menu-arrow">↗</span>
+  </a>
+
+  <a
+    href="https://github.com/likithadbennur2-creator"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <span>GITHUB</span>
+    <span class="menu-arrow">↗</span>
+  </a>
+
+  <a href="#">
+    <span>UPWORK</span>
+    <span class="menu-arrow">↗</span>
+  </a>
+
+  <a href="#">
+    <span>TELEGRAM</span>
+    <span class="menu-arrow">↗</span>
+  </a>
+
+</div>
+
+
+<!-- DEV LABS -->
+
+
+
+<!-- MAIN NAVIGATION -->
+<nav class="menu-links">
+
+  <a href="#contact">
+    <span>[04]</span>
+    <strong>CONTACT</strong>
+    <span class="menu-arrow">↗</span>
+  </a>
+
+  <a href="#work">
+    <span>[03]</span>
+    <strong>WORK</strong>
+    <span class="menu-arrow">↗</span>
+  </a>
+
+  <a href="about.html">
+    <span>[02]</span>
+    <strong>ABOUT</strong>
+    <span class="menu-arrow">↗</span>
+  </a>
+
+  <a href="#home">
+    <span>[01]</span>
+    <strong>HOME</strong>
+    <span class="menu-arrow">↗</span>
+  </a>
+
+</nav>
+
+
+  <!-- DEV LABS -->
+  <div class="menu-dev">
+    <span>DEV LABS</span>
+    <span>↗</span>
+  </div>
+
+
+  <!-- MAIN NAVIGATION -->
+  <nav class="menu-links">
+
+    <a href="#contact">
+      <span>[04]</span>
+      <strong>CONTACT</strong>
+      <span>↗</span>
+    </a>
+
+    <a href="#work">
+      <span>[03]</span>
+      <strong>WORK</strong>
+      <span>↗</span>
+    </a>
+
+    <a href="#about-me">
+      <span>[02]</span>
+      <strong>ABOUT</strong>
+      <span>↗</span>
+    </a>
+
+    <a href="#home">
+      <span>[01]</span>
+      <strong>HOME</strong>
+      <span>↗</span>
+    </a>
+
+  </nav>
+
+</div>
+
+<!-- ================= END FLOATING MENU ================= -->
 
 <!-- ================= HERO ================= -->
 <section id="home" class="hero">
@@ -83,8 +229,35 @@
     </svg>
   </div>
 
+  <!-- ================= AI AGENT GLB ================= -->
+  <!-- ================= AI ASSISTANT ================= -->
+<div class="hero-ai-agent" id="aiAssistant">
+
+  <div class="ai-agent-label">
+    <span class="ai-agent-dot"></span>
+    <span>ASK MY AI</span>
+  </div>
+
+  <div class="hero-ai-react">
+    <model-viewer
+      src="bunny_girl.glb"
+      alt="AI Portfolio Assistant"
+      animation-name="IdleBunnyGirl"
+      autoplay
+      disable-zoom
+      interaction-prompt="none"
+      field-of-view="25deg">
+    </model-viewer>
+  </div>
+
+  <div class="ai-agent-hint">
+    Click to chat
+  </div>
+
+</div>
+
   <div class="hero-portrait image-reveal" id="heroReveal">
-    <img src="portrait.png" alt="Jona Reyes portrait" class="reveal-source">
+    <img src="purple.png" alt="Likitha_DB portrait" class="reveal-source">
     <div class="reveal-tiles"></div>
 </div>                                                                                                                               
 
@@ -109,7 +282,10 @@
 
     <div class="hero-role-row fade-up" style="animation-delay:.4s">
       <span class="rule"></span>
-      <p>CLOUD COMPUTATION . FULL STACK WEB DEVELOPMENT <span>DREAMER</span></p>
+      <p>CLOUD COMPUTATION . FULL STACK WEB DEVELOPMENT 
+
+      </p>
+      <span class="rule"></span>
     </div>
 
     <p class="hero-desc fade-up" style="animation-delay:.48s">
@@ -118,8 +294,8 @@
     </p>
 
     <div class="hero-actions fade-up" style="animation-delay:.56s">
-      <a href="#" class="btn btn-primary">VIEW ↓</a>
-      <a href="#work" class="btn btn-outline" id="viewWorkBtn">/VIEW WORK</a>
+      
+      <a href="about.html" class="btn btn-outline" id="viewWorkBtn">/VIEW WORK</a>
     </div>
   </div>
 </section>
@@ -166,7 +342,7 @@
 
     <!-- MAIN PORTRAIT -->
     <img
-      src="portrait.png"
+      src="new.jpeg"
       alt="Likitha DB"
       class="about-me-photo"
       id="aboutPhoto"
@@ -177,7 +353,7 @@
 
         <a
           class="physics-item physics-linkedin"
-          href="https://www.linkedin.com/in/likitha-d-bennur/"
+          href="https://www.linkedin.com/in/likitha-d-bennur"
           target="_blank"
           rel="noopener noreferrer"
           data-name="LinkedIn"
@@ -210,7 +386,7 @@
 
         <a
           class="physics-item physics-about"
-          href="#about"
+          href="about.html"
           data-name="About Me"
         >
             <model-viewer
@@ -222,49 +398,9 @@
             <span>ABOUT ME</span>
         </a>
 
-        <a
-          class="physics-item physics-achievements"
-          href="#"
-          data-name="Achievements"
-        >
-            <model-viewer
-              src="achievement_trophy.glb"
-              auto-rotate
-              disable-zoom
-              interaction-prompt="none"
-            ></model-viewer>
-            
-        </a>
+        
 
-        <a
-          class="physics-item physics-certifications"
-          href="#"
-          data-name="Certifications"
-        >
-            <model-viewer
-              src="question_mark.glb"
-              auto-rotate
-              disable-zoom
-              interaction-prompt="none"
-            ></model-viewer>
-            
-        </a>
-
-        <a
-          class="physics-item physics-arcade"
-          href="#"
-          target="_blank"
-          rel="noopener"
-          data-name="Google Arcade"
-        >
-            <model-viewer
-              src="question_mark.glb"
-              auto-rotate
-              disable-zoom
-              interaction-prompt="none"
-            ></model-viewer>
-            
-        </a>
+       
 
     </div>
 
@@ -352,149 +488,135 @@ Computer Science student passionate about Cloud Engineering, Java, and automatio
 
 <!-- ================= WORK / PAGE 3 ================= -->
 <!-- ================= WORK / PAGE 3 ================= -->
-<section id="work" class="work-section">
 
-  <div class="section-head">
-    <div>
-      <div class="kicker">/ SELECTED WORK</div>
-      <h2 class="display">PROJECTS</h2>
-    </div>
-
-    <div class="section-meta">
-      <span>03 PROJECTS</span>
-    </div>
-  </div>
-
-  <div class="work-stack">
-
-    <!-- CARD 1 -->
-    <div class="stack-item">
-
-      <article class="work-card">
-
-        <div class="work-card-number">01 / 03</div>
-
-        <div class="work-card-content">
-
-          <div class="kicker">/ PROJECT ONE</div>
-
-          <h2 class="display">PROJECT ONE</h2>
-
-          <p>
-            Your first project description goes here.
-          </p>
-
-        </div>
-
-        <div class="work-card-label">
-          VIEW PROJECT →
-        </div>
-
-      </article>
-
-    </div>
-
-
-    <!-- CARD 2 -->
-    <div class="stack-item">
-
-      <article class="work-card">
-
-        <div class="work-card-number">02 / 03</div>
-
-        <div class="work-card-content">
-
-          <div class="kicker">/ PROJECT TWO</div>
-
-          <h2 class="display">PROJECT TWO</h2>
-
-          <p>
-            Your second project description goes here.
-          </p>
-
-        </div>
-
-        <div class="work-card-label">
-          VIEW PROJECT →
-        </div>
-
-      </article>
-
-    </div>
-
-
-    <!-- CARD 3 -->
-    <div class="stack-item">
-
-      <article class="work-card">
-
-        <div class="work-card-number">02 / 03</div>
-
-        <div class="work-card-content">
-
-          <div class="kicker">/ PROJECT TWO</div>
-
-          <h2 class="display">PROJECT TWO</h2>
-
-          <p>
-            Your second project description goes here.
-          </p>
-
-        </div>
-
-        <div class="work-card-label">
-          VIEW PROJECT →
-        </div>
-
-      </article>
-
-    </div>
-
-  </div>
-
-
-  <!-- CARD NAVIGATION -->
-  <div class="case-nav">
-
-    <div
-      class="case-dots"
-      id="case-dots">
-    </div>
-
-    <div
-      class="case-count"
-      id="case-count">
-      01 / 03
-    </div>
-
-  </div>
-
-</section>
 
 <!-- ================= PAGE 4 ================= -->
+<!-- ================= PAGE 4 ================= -->
+
 <section id="page-four" class="page-four">
 
-  <div class="page-four-inner">
+  <div class="page-four-track">
 
-    <div class="page-four-number">04</div>
+    <div class="page-four-stage">
 
-    <div class="page-four-content">
-      <div class="page-four-eyebrow">/ NEXT CHAPTER</div>
+      <!-- Top moving text -->
+      <div class="page-four-strip">
+        <div class="page-four-marquee">
+          <span>CREATIVE</span>
+          <span>DESIGN</span>
+          <span>DEVELOPMENT</span>
+          <span>WEB</span>
+          <span>MOTION</span>
+          <span>CREATIVE</span>
+          <span>DESIGN</span>
+          <span>DEVELOPMENT</span>
+        </div>
+      </div>
 
-      <h2>
-        LET'S
-        <span>CREATE</span>
-      </h2>
 
-      <p>
-        A new space for my creative work, experiments,
-        ideas and digital experiences.
-      </p>
-    </div>
+      <!-- Page 4 introduction -->
+      <div class="page-four-hero">
 
-    <div class="page-four-bottom">
-      <span>SCROLL TO EXPLORE</span>
-      <span>↓</span>
+        <div class="page-four-number">
+          04
+        </div>
+
+        <div class="page-four-eyebrow">
+          / NEXT CHAPTER
+        </div>
+
+        <h2>
+          LET'S<br>
+          <span>CREATE</span>
+        </h2>
+
+        <p>
+          A new space for my creative work...
+        </p>
+
+      </div>
+
+
+      <!-- Floating pieces -->
+      <div class="page-four-bits"></div>
+
+
+      <!-- ================= ENVELOPE ================= -->
+
+      <div class="page-four-envelope">
+
+        <!-- Back -->
+        <div class="envelope-back"></div>
+
+
+        <!-- Back flap -->
+        <div
+          id="page-four-flap-back"
+          class="envelope-flap envelope-flap-back">
+        </div>
+
+
+        <!-- Resume / card -->
+        <div class="envelope-card-clip">
+
+          <div
+            class="envelope-card-move"
+            id="page-four-card-move">
+
+            <div
+              class="envelope-card"
+              id="page-four-card">
+
+              <div class="resume-placeholder">
+
+    <a
+        href="./Likitha_DB.pdf"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="resume-link"
+    >
+        <img
+            src="./resume.png"
+            alt="Likitha DB Resume"
+            class="resume-image"
+        >
+    </a>
+
+</div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- Front of envelope -->
+        <div class="envelope-front">
+
+          <i class="envelope-left"></i>
+
+          <i class="envelope-right"></i>
+
+          <i class="envelope-bottom"></i>
+
+        </div>
+
+
+        <!-- Front flap -->
+        <div
+          id="page-four-flap-front"
+          class="envelope-flap envelope-flap-front">
+        </div>
+
+      </div>
+
+
+      <!-- Bottom hint -->
+      <div class="page-four-hint">
+        KEEP SCROLLING
+      </div>
+
     </div>
 
   </div>
@@ -513,63 +635,17 @@ Computer Science student passionate about Cloud Engineering, Java, and automatio
       <div class="eyebrow">/EXPERIENCE</div>
       <h2 class="display">WORK <span class="outline-text">HISTORY</span></h2>
     </div>
-    <p class="side-note">15+ years leading design across fintech, automotive and advertising.</p>
+    <p class="side-note">I’m a Computer Science student passionate about Cloud Engineering, AI, automation, and building practical solutions to real-world problems.</p>
   </div>
 
   <div class="timeline" id="timeline"></div>
 </section>
 
-<!-- ================= ABOUT ================= -->
-<section id="about" class="about-section">
-  <div class="about-grid">
-    <div class="about-portrait">
-      <svg viewBox="0 0 500 620" preserveAspectRatio="xMidYMax slice">
-        <rect width="500" height="620" fill="#161616"/>
-        <g fill="none" stroke="#3a3a3a" stroke-width="1.5">
-          <path d="M110 620 C110 420 170 300 250 292 C330 300 390 420 390 620 Z"/>
-          <circle cx="250" cy="210" r="105"/>
-        </g>
-        <circle cx="292" cy="190" r="2" fill="#f5c518"/>
-      </svg>
-    </div>
-    <div class="about-copy">
-      <div class="eyebrow">/ABOUT</div>
-      <h2 class="display" style="margin:14px 0 26px;font-size:clamp(30px,3.6vw,46px);">A DESIGNER WHO SPEAKS <span class="outline-text">BUSINESS</span></h2>
-      <p>I'm <strong>Likitha DB</strong>,A curious Computer Science student ready to learn, build, and make an impact through technology.
-Always willing to take on challenges, explore beyond my comfort zone, and turn ideas into something real.
- <strong>leading a design organization</strong> and staying hands-on with the craft — reviewing flows, sketching systems, and mentoring the next group of design leads.</p>
-      <div class="about-skills">
-        <span>CLOUD COMPUTAION</span>
-        <span>ARTIFICIAL INTELLIGENCE </span>
-        <span>PRODUCT DESIGN</span>
-        <span>SOFTWARE DEVELOPMENT</span>
-        <span>TEAM BUILDING</span>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- ================= CONTACT ================= -->
-<section id="contact" class="contact-section">
-  <div class="eyebrow">/CONTACT</div>
-  <div style="margin-top:24px;">
-    <div class="display reveal-line" data-color="white">LET'S CRAFT</div>
-    <div class="display reveal-line" data-color="yellow">THE NEXT</div>
-    <div class="display reveal-line" data-color="white">CHAPTER.</div>
-  </div>
-
-  <a href="mailto:hello@jonareyes.com" class="contact-email">hello@jonareyes.com</a>
-
-  <div class="contact-links">
-    <a href="https://www.linkedin.com/in/likitha-d-bennur/">LINKEDIN</a>
-    <a href="#">CONTACT PAGE</a>
-    <a href="#">DOWNLOAD CV</a>
-  </div>
-</section>
 
 <!-- ================= FOOTER ================= -->
 <footer>
-  <div class="footer-watermark">REYES</div>
+  <div class="footer-watermark">LIKITHA<br>D Bennur</div>
   <div class="footer-bottom">
     <div class="logo">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f5c518" stroke-width="1.4">
@@ -579,13 +655,39 @@ Always willing to take on challenges, explore beyond my comfort zone, and turn i
       LIKITHA D BENNUR
     
     </div>
-    <div>Copyright © 2026 Jona Reyes. All Rights Reserved.</div>
+    
     <div class="footer-status"><span class="dot"></span> OPEN TO WORK</div>
   </div>
 </footer>
 
 <div id="scroll-hint" aria-hidden="true"><div class="core"></div></div>
 
+<!-- ================= AI CHAT CARD ================= -->
+
+<div class="ai-chat-overlay" id="aiChatOverlay">
+
+  <div class="ai-chat-card">
+
+    <button
+      class="ai-chat-close"
+      id="aiChatClose"
+      type="button"
+      aria-label="Close AI assistant"
+    >
+      ×
+    </button>
+
+    <iframe
+  id="aiChatFrame"
+  class="ai-chat-frame"
+  title="AI Portfolio Assistant">
+</iframe>
+
+  </div>
+
+</div>
+
 <script src="script.js"></script>
+
 </body>
 </html>
