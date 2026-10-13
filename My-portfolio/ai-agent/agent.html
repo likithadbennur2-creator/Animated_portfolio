@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Portfolio AI</title>
+
+  <link rel="stylesheet" href="agent.css">
+
+  <!-- Model Viewer -->
+  <script
+    type="module"
+    src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.1.0/model-viewer.min.js">
+  </script>
+</head>
+
+<body>
+
+  <div class="ai-window">
+
+    <!-- HEADER -->
+    <div class="ai-header">
+
+      <div class="ai-character">
+
+        <model-viewer
+  src="bunny_girl.glb"
+  camera-orbit="0deg 55deg 2m"
+  field-of-view="25deg"
+  camera-controls
+  disable-zoom
+  auto-rotate
+  autoplay>
+</model-viewer>
+
+      </div>
+
+      <div class="ai-title">
+
+        <div class="ai-name">
+          PORTFOLIO AI
+        </div>
+
+        <div class="ai-status">
+          <span class="status-dot"></span>
+          ONLINE
+        </div>
+
+      </div>
+
+      <button class="ai-close" id="closeAI">
+        ×
+      </button>
+      <button class="theme-toggle" id="themeToggle" type="button">DARK</button>
+
+    </div>
+
+
+    <!-- CHAT -->
+    <div class="chat-area" id="chatArea">
+
+      <div class="message agent-message">
+
+        <div class="message-label">
+          AI
+        </div>
+
+        <div class="message-text">
+          Hey! I'm the AI assistant for this portfolio.
+          Ask me anything about the projects, skills,
+          experience, services or the person behind this portfolio.
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- SUGGESTIONS -->
+    <div class="suggestions">
+
+      <button data-question="Tell me about the projects">
+        Projects
+      </button>
+
+      <button data-question="What skills does the designer have?">
+        Skills
+      </button>
+
+      <button data-question="Tell me about the experience">
+        Experience
+      </button>
+
+      <button data-question="What services are available?">
+        Services
+      </button>
+
+    </div>
+
+
+    <!-- INPUT -->
+    <form class="chat-input-area" id="chatForm">
+
+      <input
+        id="chatInput"
+        type="text"
+        placeholder="Ask me something..."
+        autocomplete="off"
+      >
+
+      <button type="submit" id="sendButton">
+        →
+      </button>
+
+    </form>
+
+  </div>
+
+
+  <script src="agent.js"></script>
+  <script src="theme.js"></script>
+
+</body>
+</html>
